@@ -7,11 +7,8 @@ package proyecto2;
 
 /**
  *
- * @author Javiera Cabrera
+ * @author 56992
  */
-public class Empresa {
-    public static void main(String[] args) {
-        // TODO code application logic here
-    }
+public class Surtidor {
     
 }
