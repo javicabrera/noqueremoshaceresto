@@ -23,7 +23,7 @@ public class Sucursal {
     public static void main(String[] args) {
         ServerSocket server = null;
         Socket sc = null;
-        final int PORT = 4200;
+        final int PORT = 80;
         DataInputStream in;
         DataOutputStream out;
         Scanner scanner = new Scanner(System.in);
