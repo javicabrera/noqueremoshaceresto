@@ -89,9 +89,9 @@ public class Surtidor {
 
     public static void main(String[] args) {
         System.out.println("testing 1");
-        final String HOST = "192.168.43.69";
-//        final String HOST = "35.247.228.145"; //virtual machine
-        final int PORT = 4200;
+//        final String HOST = "192.168.43.69";
+        final String HOST = "34.95.145.17"; //virtual machine
+        final int PORT = 443;
         DataInputStream in;
         DataOutputStream out;
         Surtidor surtidor1 = new Surtidor(1,100,100,100,100,100);
