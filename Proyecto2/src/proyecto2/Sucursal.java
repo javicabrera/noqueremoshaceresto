@@ -23,7 +23,7 @@ public class Sucursal {
     public static void main(String[] args) {
         ServerSocket server = null;
         Socket sc = null;
-        final int PORT = 4200;
+        final int PORT = 443;
         DataInputStream in;
         DataOutputStream out;
         Scanner scanner = new Scanner(System.in);
@@ -67,7 +67,7 @@ public class Sucursal {
         String tipoCombustible = "";
         double nuevoPrecio = 0.0;
         int option;
-        
+
         System.out.println("1 - bencina 93");
         System.out.println("2 - bencina 95");
         System.out.println("3 - bencina 97");
