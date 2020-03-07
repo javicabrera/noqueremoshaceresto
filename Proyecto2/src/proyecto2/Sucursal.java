@@ -53,7 +53,6 @@ public class Sucursal {
                 if(option == 2) break;
 
                 System.out.println("test !");
-
             }
             sc.close();
             System.out.println("...cerrando server !");
