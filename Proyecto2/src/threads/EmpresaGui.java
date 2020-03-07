@@ -10,6 +10,7 @@ import java.util.Scanner;
 
 public class EmpresaGui extends Thread {
     private ArrayList<Socket> surtidores;
+    private ArrayList<Socket> sucursales;
     private ServerSocket server;
     private Scanner scanner;
 
@@ -24,20 +25,20 @@ public class EmpresaGui extends Thread {
         int option;
         while(true){
             System.out.println("1 - actualizar precio");
-            System.out.println("2 - salir");
+            System.out.println("2.- generar reporte");
+            System.out.println("3 - salir");
             System.out.print("Ingrese una opción: ");
             option = scanner.nextInt();
 
             switch (option){
                 case 1: actualizarPrecio(this.surtidores);
                     break;
-                case 2: closeServer(this.server);
+                case 2: generarReporte(this.sucursales);
+                    break;
+                case 3: closeServer(this.server);
                     break;
                 default: break;
             }
-
-            if(option == 2) break;
-
         }
     }
 
@@ -97,5 +98,9 @@ public class EmpresaGui extends Thread {
     public boolean addSocket(Socket socket) {
         System.out.println("nuevo socket!");
         return surtidores.add(socket);
+    }
+
+    private void generarReporte(ArrayList<Socket> sucursales) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -8,6 +8,9 @@ package proyecto2;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.InetAddress;
+import java.net.MulticastSocket;
 import java.net.Socket;
 
 /**
@@ -21,16 +24,38 @@ public class Surtidor {
     private double gasolina97;
     private double diesel;
     private double kerosene;
+    private int cargas=0;
 
-    public Surtidor(int id, double gasolina93, double gasolina95, double gasolina97, double diesel, double kerosene) {
+    public Surtidor(int cargas, int id, double gasolina93, double gasolina95, double gasolina97, double diesel, double kerosene) {
         this.id = id;
         this.gasolina93 = gasolina93;
         this.gasolina95 = gasolina95;
         this.gasolina97 = gasolina97;
         this.diesel = diesel;
         this.kerosene = kerosene;
+        this.cargas= cargas;
     }
-
+    public static void main(String[] args) throws IOException {
+        InetAddress ip = InetAddress.getByName("localhost");
+        MulticastSocket socket = new MulticastSocket(10600);
+        socket.joinGroup(ip);
+        // SE ENVIAN CARGAS ACTUALES
+        
+       
+        byte[] bufferEntrada = new byte[1000];
+        DatagramPacket msjEntrada = new DatagramPacket(bufferEntrada, bufferEntrada.length);
+        //CLIENTE ESPERA POR EL MENSAJE DEL SERVIDOR
+        while(true){
+            //RECIBE MENSAJE DEL SERVIDOR EN ESTE CASO EL PRECIO 
+            socket.receive(msjEntrada);
+            System.out.println(new String(bufferEntrada));
+            //SE ENVIAN CARGAS ACTUALES AL SERVIDOR/SUCURSAL
+            
+            byte[] bufferSalida = "".getBytes();
+            DatagramPacket msjSalida = new DatagramPacket(bufferSalida, bufferSalida.length, ip, 10600);
+            socket.send(msjSalida);
+        }
+    }
     public Surtidor(){
         this.id = 0;
         this.gasolina93 = 100;
