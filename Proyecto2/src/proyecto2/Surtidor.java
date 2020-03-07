@@ -60,6 +60,14 @@ public class Surtidor {
         return gasolina97;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public void setGasolina97(double gasolina97) {
         this.gasolina97 = gasolina97;
     }
@@ -89,7 +97,7 @@ public class Surtidor {
 
     public static void main(String[] args) {
         System.out.println("testing 1");
-        final String HOST = "192.168.43.69";
+        final String HOST = "127.0.0.1";
 //        final String HOST = "35.247.228.145"; //virtual machine
         final int PORT = 4200;
         DataInputStream in;
@@ -105,7 +113,7 @@ public class Surtidor {
 
             while(true){
                 String message = in.readUTF();
-                System.out.println("-> recibiendo esde el surtidor: " + message);
+                System.out.println("-> recibiendo desde el surtidor: " + message);
 
                 if(message.contains("actualizar")){
                     String [] splitted  = message.split("-");
