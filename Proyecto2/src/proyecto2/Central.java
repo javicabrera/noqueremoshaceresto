@@ -19,7 +19,7 @@ public class Central {
     public static void main(String[] args) {
         ServerSocket server = null;
         Socket sc = null;
-        final int PORT = 6900; // En la práctica, este parámetro debería corresponder con el puerto que la maquina virtual tenga habilitado
+        final int PORT = 80; // En la práctica, este parámetro debería corresponder con el puerto que la maquina virtual tenga habilitado
 
         try{
             server = new ServerSocket(PORT);

@@ -14,8 +14,8 @@ public class AdminSurtidores extends Thread {
     ArrayList<Socket> surtidores;
     ArrayList<SurtidorListener> listeners;
     Socket socketCentral;
-    final String HOST = "127.0.0.1"; // Ip pública de la máquina virtual
-    final int CENTRAL_PORT = 6900;  // este corresponde al puerto mediante la maquina virtual está escuchando
+    final String HOST = "34.95.145.17"; // Ip pública de la máquina virtual
+    final int CENTRAL_PORT = 80;  // este corresponde al puerto mediante la maquina virtual está escuchando
 
     public AdminSurtidores() throws IOException {
         this.surtidores = new ArrayList<Socket>();
