@@ -60,6 +60,14 @@ public class Surtidor {
         return gasolina97;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public void setGasolina97(double gasolina97) {
         this.gasolina97 = gasolina97;
     }
@@ -88,26 +96,24 @@ public class Surtidor {
 
 
     public static void main(String[] args) {
-        System.out.println("testing 1");
-//        final String HOST = "192.168.43.69";
-        final String HOST = "34.95.145.17"; //virtual machine
-        final int PORT = 443;
+        final String HOST = "127.0.0.1";
+//        final String HOST = "35.247.228.145"; //virtual machine
+        final int PORT = 4200;
         DataInputStream in;
         DataOutputStream out;
         Surtidor surtidor1 = new Surtidor(1,100,100,100,100,100);
-
+        // el surtidor debería inicializarse con la info que le llega como respuesa desde la central con los precios de los combustibles
         try {
             Socket sc = new Socket(HOST, PORT);
-            System.out.println("testing 2");
 
             in = new DataInputStream(sc.getInputStream());
             out = new DataOutputStream(sc.getOutputStream());
 
             while(true){
                 String message = in.readUTF();
-                System.out.println("-> recibiendo esde el surtidor: " + message);
+                System.out.println("-> recibiendo desde el surtidor: " + message);
 
-                if(message.contains("actualizar")){
+                if(message.contains("act")){
                     String [] splitted  = message.split("-");
                     String tipoCompbustible = splitted[1];
                     double nuevoPrecio = Double.valueOf(splitted[2]);
