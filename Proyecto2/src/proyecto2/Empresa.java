@@ -10,5 +10,9 @@ package proyecto2;
  * @author Javiera Cabrera
  */
 public class Empresa {
+    public static void main(String[] args) {
+        
+    
+    }
     
 }
