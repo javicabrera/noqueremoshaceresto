@@ -96,7 +96,7 @@ public class Surtidor {
 
 
     public static void main(String[] args) {
-        final String HOST = "127.0.0.1";
+        final String HOST = "192.168.0.10";
 //        final String HOST = "35.247.228.145"; //virtual machine
         final int PORT = 4200;
         DataInputStream in;
