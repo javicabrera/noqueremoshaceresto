@@ -21,6 +21,7 @@ import java.util.Scanner;
 public class Sucursal {
     private ArrayList<Surtidor> s;
     public static void main(String[] args) {
+        
         ServerSocket server = null;
         Socket sc = null;
         final int PORT = 4200;
