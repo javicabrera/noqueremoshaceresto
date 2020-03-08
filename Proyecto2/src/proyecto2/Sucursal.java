@@ -1,9 +1,7 @@
 package proyecto2;
 
-import threads.EmpresaGui;
+import threads.AdminSurtidores;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -13,7 +11,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -62,7 +59,30 @@ public class Sucursal {
         precios[y]=x;     
     }
 
-    private static Object getContador() {
-        return precios;
+    public static void main(String[] args) throws IOException {
+        final int PORT = 4200;
+        ArrayList<Socket> surtidores = new ArrayList<Socket>();
+        ServerSocket server = null;
+        Socket sc = null;
+        AdminSurtidores admin;
+
+        try{
+            server = new ServerSocket(PORT);
+            System.out.println("servidor sucursal iniciado. Esperando por surtidores...");
+            admin = new AdminSurtidores();
+            admin.start();
+
+            while(!server.isClosed()){
+                if((sc = server.accept()) == null) break;  // esta sentencia hace que el programa espere por un nuevo cliente (surtidor)
+                System.out.println("surtidor conectado");
+                admin.addSurtidor(sc);
+                surtidores.add(sc);
+            }
+            sc.close();
+            System.out.println("...saliendo !");
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
     }
 }
