@@ -7,6 +7,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Scanner;
+import ventana.VentanaEmpresa;
 
 // Esta clase se encarga de la gestión de las sucursales y de mostrar
 // la interfaz gráfica (a sabiendas de que es una mala práctica de programación)
@@ -16,11 +17,13 @@ public class CentralGui extends Thread {
     private ArrayList<Socket> sucursales;
     private ServerSocket server;
     private Scanner scanner;
-
+    private VentanaEmpresa vista;
+    
     public CentralGui(ServerSocket server){
         this.server = server;
         this.sucursales = new ArrayList<>();
         this.scanner = new Scanner(System.in);
+        this.vista= new VentanaEmpresa();
     }
 
     @Override

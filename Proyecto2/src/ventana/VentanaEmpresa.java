@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package proyecto2;
+package ventana;
 
 /**
  *
  * @author Yarixa
  */
 public class VentanaEmpresa extends javax.swing.JFrame {
-
+    private int opcion;
     /**
      * Creates new form VentanaEmpresa
      */
@@ -30,25 +30,25 @@ public class VentanaEmpresa extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
-        jRadioButton5 = new javax.swing.JRadioButton();
+        option93 = new javax.swing.JRadioButton();
+        option95 = new javax.swing.JRadioButton();
+        optionKerosene = new javax.swing.JRadioButton();
+        option97 = new javax.swing.JRadioButton();
+        optionDiesel = new javax.swing.JRadioButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
-        jTextField9 = new javax.swing.JTextField();
-        jTextField10 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        actual93 = new javax.swing.JTextField();
+        actual95 = new javax.swing.JTextField();
+        actual07 = new javax.swing.JTextField();
+        actualDiesel = new javax.swing.JTextField();
+        actualKerosene = new javax.swing.JTextField();
+        nuevo93 = new javax.swing.JTextField();
+        nuevo95 = new javax.swing.JTextField();
+        nuevo97 = new javax.swing.JTextField();
+        nuevoDiesel = new javax.swing.JTextField();
+        nuevoKerosene = new javax.swing.JTextField();
+        botonGuardar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -58,15 +58,40 @@ public class VentanaEmpresa extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Cambiar Precio");
 
-        jRadioButton1.setText("93");
+        option93.setText("93");
+        option93.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                option93ActionPerformed(evt);
+            }
+        });
 
-        jRadioButton2.setText("95");
+        option95.setText("95");
+        option95.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                option95ActionPerformed(evt);
+            }
+        });
 
-        jRadioButton3.setText("Kerosene");
+        optionKerosene.setText("Kerosene");
+        optionKerosene.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                optionKeroseneActionPerformed(evt);
+            }
+        });
 
-        jRadioButton4.setText("97");
+        option97.setText("97");
+        option97.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                option97ActionPerformed(evt);
+            }
+        });
 
-        jRadioButton5.setText("Diesel");
+        optionDiesel.setText("Diesel");
+        optionDiesel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                optionDieselActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Tipo Combustible");
@@ -77,27 +102,32 @@ public class VentanaEmpresa extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setText("Precio Nuevo");
 
-        jTextField1.setText(" ");
+        actual93.setText(" ");
 
-        jTextField2.setText(" ");
+        actual95.setText(" ");
 
-        jTextField3.setText(" ");
+        actual07.setText(" ");
 
-        jTextField4.setText(" ");
+        actualDiesel.setText(" ");
 
-        jTextField5.setText(" ");
+        actualKerosene.setText(" ");
 
-        jTextField6.setText(" ");
+        nuevo93.setText(" ");
 
-        jTextField7.setText(" ");
+        nuevo95.setText(" ");
+        nuevo95.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nuevo95ActionPerformed(evt);
+            }
+        });
 
-        jTextField8.setText(" ");
+        nuevo97.setText(" ");
 
-        jTextField9.setText(" ");
+        nuevoDiesel.setText(" ");
 
-        jTextField10.setText(" ");
+        nuevoKerosene.setText(" ");
 
-        jButton1.setText("Guardar Cambios");
+        botonGuardar.setText("Guardar Cambios");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -115,33 +145,33 @@ public class VentanaEmpresa extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel3)
-                                    .addComponent(jRadioButton1)
-                                    .addComponent(jRadioButton2)
-                                    .addComponent(jRadioButton4)
-                                    .addComponent(jRadioButton5)
-                                    .addComponent(jRadioButton3))
+                                    .addComponent(option93)
+                                    .addComponent(option95)
+                                    .addComponent(option97)
+                                    .addComponent(optionDiesel)
+                                    .addComponent(optionKerosene))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel4)
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
-                                        .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jTextField5, javax.swing.GroupLayout.Alignment.LEADING)))
+                                        .addComponent(actual93, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
+                                        .addComponent(actual95, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(actual07, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(actualDiesel, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(actualKerosene, javax.swing.GroupLayout.Alignment.LEADING)))
                                 .addGap(53, 53, 53)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel5)
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(jTextField6, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jTextField7, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jTextField8, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jTextField9, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jTextField10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                                        .addComponent(nuevo93, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(nuevo95, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(nuevo97, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(nuevoDiesel, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(nuevoKerosene, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(botonGuardar)
                 .addGap(130, 130, 130))
         );
         jPanel1Layout.setVerticalGroup(
@@ -159,36 +189,36 @@ public class VentanaEmpresa extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jRadioButton1)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(option93)
+                            .addComponent(actual93, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jRadioButton2)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(option95)
+                            .addComponent(actual95, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jRadioButton4)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(option97)
+                            .addComponent(actual07, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jRadioButton5)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(optionDiesel)
+                            .addComponent(actualDiesel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jRadioButton3)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(optionKerosene)
+                            .addComponent(actualKerosene, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(nuevo93, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(nuevo95, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(nuevo97, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(nuevoDiesel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(nuevoKerosene, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(botonGuardar)
                 .addContainerGap())
         );
 
@@ -211,6 +241,36 @@ public class VentanaEmpresa extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void option93ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_option93ActionPerformed
+        // TODO add your handling code here:
+        this.opcion=1;
+    }//GEN-LAST:event_option93ActionPerformed
+
+    private void option95ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_option95ActionPerformed
+        // TODO add your handling code here:
+        this.opcion=2;
+    }//GEN-LAST:event_option95ActionPerformed
+
+    private void nuevo95ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevo95ActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_nuevo95ActionPerformed
+
+    private void option97ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_option97ActionPerformed
+        // TODO add your handling code here:
+        this.opcion=3;
+    }//GEN-LAST:event_option97ActionPerformed
+
+    private void optionDieselActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optionDieselActionPerformed
+        // TODO add your handling code here:
+        this.opcion=4;
+    }//GEN-LAST:event_optionDieselActionPerformed
+
+    private void optionKeroseneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optionKeroseneActionPerformed
+        // TODO add your handling code here:
+        this.opcion=5;
+    }//GEN-LAST:event_optionKeroseneActionPerformed
 
     /**
      * @param args the command line arguments
@@ -248,27 +308,27 @@ public class VentanaEmpresa extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JTextField actual07;
+    private javax.swing.JTextField actual93;
+    private javax.swing.JTextField actual95;
+    private javax.swing.JTextField actualDiesel;
+    private javax.swing.JTextField actualKerosene;
+    private javax.swing.JButton botonGuardar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
-    private javax.swing.JRadioButton jRadioButton5;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
+    private javax.swing.JTextField nuevo93;
+    private javax.swing.JTextField nuevo95;
+    private javax.swing.JTextField nuevo97;
+    private javax.swing.JTextField nuevoDiesel;
+    private javax.swing.JTextField nuevoKerosene;
+    private javax.swing.JRadioButton option93;
+    private javax.swing.JRadioButton option95;
+    private javax.swing.JRadioButton option97;
+    private javax.swing.JRadioButton optionDiesel;
+    private javax.swing.JRadioButton optionKerosene;
     // End of variables declaration//GEN-END:variables
 }

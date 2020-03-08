@@ -24,7 +24,7 @@ public class Central {
         try{
             server = new ServerSocket(PORT);
             System.out.println("servidor iniciado. Esperano por clientes...");
-            CentralGui gui = new CentralGui(server); // Este objeto extiende a Thread, por o tanto implementa el método run que se ejecuta en un hilo de ejecución aparte
+            CentralGui gui = new CentralGui(server); // Este objeto extiende a Thread, por o tanto implementa el método run que se ejecuta en un hilo de ejecución aparte            
             sc = server.accept();  // Se espera la conexión del primer surtidor
             System.out.println("cliente conectado...");
             gui.addSocket(sc);
