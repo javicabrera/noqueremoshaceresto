@@ -8,14 +8,18 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class EmpresaGui extends Thread {
-    private ArrayList<Socket> surtidores;
+// Esta clase se encarga de la gestión de las sucursales y de mostrar
+// la interfaz gráfica (a sabiendas de que es una mala práctica de programación)
+// en un nuevo hilo de ejecución
+
+public class CentralGui extends Thread {
+    private ArrayList<Socket> sucursales;
     private ServerSocket server;
     private Scanner scanner;
 
-    public EmpresaGui(ServerSocket server){
+    public CentralGui(ServerSocket server){
         this.server = server;
-        this.surtidores = new ArrayList<>();
+        this.sucursales = new ArrayList<>();
         this.scanner = new Scanner(System.in);
     }
 
@@ -29,7 +33,7 @@ public class EmpresaGui extends Thread {
             option = scanner.nextInt();
 
             switch (option){
-                case 1: actualizarPrecio(this.surtidores);
+                case 1: actualizarPrecio(this.sucursales);
                     break;
                 case 2: closeServer(this.server);
                     break;
@@ -85,7 +89,8 @@ public class EmpresaGui extends Thread {
                 System.out.println("actualizando el surtidor con puerto " + surtidor.getPort());
                 DataInputStream in = new DataInputStream(surtidor.getInputStream());
                 DataOutputStream out = new DataOutputStream(surtidor.getOutputStream());
-                out.writeUTF(String.valueOf("actualizar-" + tipoCombustible + "-" + nuevoPrecio));
+                out.writeUTF("act-" + tipoCombustible + "-" + nuevoPrecio);
+                System.out.println("-->mensaje enviado desde la central!");
                 String message = in.readUTF();
                 System.out.println("incomming message: " + message);
             }
@@ -96,6 +101,6 @@ public class EmpresaGui extends Thread {
 
     public boolean addSocket(Socket socket) {
         System.out.println("nuevo socket!");
-        return surtidores.add(socket);
+        return sucursales.add(socket);
     }
 }

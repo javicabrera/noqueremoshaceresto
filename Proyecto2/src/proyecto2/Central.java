@@ -5,31 +5,30 @@
  */
 package proyecto2;
 
-import threads.EmpresaGui;
+import threads.CentralGui;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Scanner;
 
 /**
  *
  * @author Javiera Cabrera
  */
-public class Empresa {
+public class Central {
     public static void main(String[] args) {
         ServerSocket server = null;
         Socket sc = null;
-        final int PORT = 4200;
+        final int PORT = 6900; // En la práctica, este parámetro debería corresponder con el puerto que la maquina virtual tenga habilitado
 
         try{
             server = new ServerSocket(PORT);
             System.out.println("servidor iniciado. Esperano por clientes...");
-            EmpresaGui gui = new EmpresaGui(server); // Este objeto extiende a Thread, por o tanto implementa el método run que se ejecuta en un hilo de ejecución aparte
+            CentralGui gui = new CentralGui(server); // Este objeto extiende a Thread, por o tanto implementa el método run que se ejecuta en un hilo de ejecución aparte
             sc = server.accept();  // Se espera la conexión del primer surtidor
             System.out.println("cliente conectado...");
             gui.addSocket(sc);
-            gui.run();  // Luego, se inicia la GUI
+            gui.start(); // gui.start() ??  // Luego, se inicia la GUI
 
             while(!server.isClosed()){
                 sc = server.accept();  // esta sentencia hace que el programa espere por un nuevo cliente (surtidor)

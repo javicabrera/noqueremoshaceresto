@@ -96,17 +96,15 @@ public class Surtidor {
 
 
     public static void main(String[] args) {
-        System.out.println("testing 1");
         final String HOST = "127.0.0.1";
 //        final String HOST = "35.247.228.145"; //virtual machine
         final int PORT = 4200;
         DataInputStream in;
         DataOutputStream out;
         Surtidor surtidor1 = new Surtidor(1,100,100,100,100,100);
-
+        // el surtidor debería inicializarse con la info que le llega como respuesa desde la central con los precios de los combustibles
         try {
             Socket sc = new Socket(HOST, PORT);
-            System.out.println("testing 2");
 
             in = new DataInputStream(sc.getInputStream());
             out = new DataOutputStream(sc.getOutputStream());
@@ -115,7 +113,7 @@ public class Surtidor {
                 String message = in.readUTF();
                 System.out.println("-> recibiendo desde el surtidor: " + message);
 
-                if(message.contains("actualizar")){
+                if(message.contains("act")){
                     String [] splitted  = message.split("-");
                     String tipoCompbustible = splitted[1];
                     double nuevoPrecio = Double.valueOf(splitted[2]);
