@@ -7,15 +7,15 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 // Ésta clase atiende losmensajes provenientes de los surtidores
-// y los gestiona
-// * Si llega un mensaje que representa una venta, acualiza la
-//   base de datos y envía la actualización a la central
+// y los gestiona. Además crea un hilo que quda a la escucha de las
+// ventas de los surtidores.
+
 public class AdminSurtidores extends Thread {
     ArrayList<Socket> surtidores;
     ArrayList<SurtidorListener> listeners;
     Socket socketCentral;
-    final String HOST = "127.0.0.1"; // Ip pública de la máquina virtual
-    final int CENTRAL_PORT = 6900;  // este corresponde al puerto mediante la maquina virtual está escuchando
+    final String HOST = "35.247.228.145"; // Ip pública de la máquina virtual
+    final int CENTRAL_PORT = 80;  // este corresponde al puerto mediante la maquina virtual está escuchando
 
     public AdminSurtidores() throws IOException {
         this.surtidores = new ArrayList<Socket>();
@@ -50,7 +50,7 @@ public class AdminSurtidores extends Thread {
     private void sendBroadcast(String message) throws IOException {
         DataOutputStream out = null;
         for(Socket surtidor : this.surtidores){
-            System.out.println("... actualizando!");
+            System.out.println("...actualizando!");
             out = new DataOutputStream(surtidor.getOutputStream());
             out.writeUTF(message);
         }
@@ -67,6 +67,6 @@ public class AdminSurtidores extends Thread {
     }
 
     private Boolean validateMessage(String message){
-        return (message!=null) && (message.contains("act"));
+        return (message!=null);
     }
 }

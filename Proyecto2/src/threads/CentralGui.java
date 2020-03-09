@@ -17,6 +17,8 @@ public class CentralGui extends Thread {
     private ArrayList<Socket> sucursales;
     private ServerSocket server;
     private Scanner scanner;
+    final int MAX_INTENTOS = 50;
+
     private VentanaEmpresa vista;
     
     public CentralGui(ServerSocket server){
@@ -43,16 +45,17 @@ public class CentralGui extends Thread {
                     break;
                 default: break;
             }
-
             if(option == 2) break;
-
         }
     }
 
     private void closeServer(ServerSocket server){
         try {
+            for(Socket sucursal : this.sucursales){
+                System.out.println("cerrando socket desde central en puerto " + sucursal.getPort());
+                sucursal.close();
+            }
             server.close();
-            System.out.println("...cerrando server!");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -88,15 +91,27 @@ public class CentralGui extends Thread {
         System.out.print("ingrese nuevo precio: ");
         nuevoPrecio = scanner.nextDouble();
 
+        sendBroadcast("act-" + tipoCombustible + "-" + nuevoPrecio, surtidores);
+    }
+
+    private void sendBroadcast(String message, ArrayList<Socket> surtidores){
+        String response;
+        int i = 0;
         try {
             for(Socket surtidor : surtidores){
-                System.out.println("actualizando el surtidor con puerto " + surtidor.getPort());
                 DataInputStream in = new DataInputStream(surtidor.getInputStream());
                 DataOutputStream out = new DataOutputStream(surtidor.getOutputStream());
-                out.writeUTF("act-" + tipoCombustible + "-" + nuevoPrecio);
-                System.out.println("-->mensaje enviado desde la central!");
-                String message = in.readUTF();
-                System.out.println("incomming message: " + message);
+                do{
+                    i++;
+                    System.out.println("intento #" + i + " - actualizando el surtidor con puerto " + surtidor.getPort());
+                    out.writeUTF(message);
+                    response = in.readUTF();
+                    System.out.println("->incomming response from sendBroadcast in CentralGui: " + message);
+                    if(i>= MAX_INTENTOS){
+                        System.out.println("CentralGui: ERROR ENVIANDO ACTUALIZACIÓN!");
+                        break;
+                    }
+                }while(!response.equals("ok"));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -104,7 +119,7 @@ public class CentralGui extends Thread {
     }
 
     public boolean addSocket(Socket socket) {
-        System.out.println("nuevo socket!");
+        System.out.println("CENTRAL: nueva conexion a sucursal!");
         return sucursales.add(socket);
     }
 }
