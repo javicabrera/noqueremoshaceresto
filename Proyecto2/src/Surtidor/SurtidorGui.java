@@ -1,7 +1,5 @@
 package Surtidor;
 
-import sun.lwawt.macosx.CSystemTray;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -50,7 +48,7 @@ public class SurtidorGui extends Thread {
                 option = scanner.nextInt();
 
                 switch (option){
-                    case 1: tipo = "93";
+                    case 1: tipo = "93";                        
                     break;
                     case 2: tipo = "95";
                     break;
@@ -63,10 +61,12 @@ public class SurtidorGui extends Thread {
                     default: tipo = "kerosene";
                     break;
                 }
-
-                cantidad = scanner.next();
-
-                Boolean response = nuevaVenta("vnt-" + option + "-" + cantidad, in, out);
+                scanner.nextLine();
+                System.out.println("Ingrese cantidad: ");
+               
+                cantidad = scanner.nextLine();
+                
+                Boolean response = nuevaVenta("vnt-" + tipo + "-" + cantidad, in, out);
             }
         } catch(IOException e){
             e.printStackTrace();
