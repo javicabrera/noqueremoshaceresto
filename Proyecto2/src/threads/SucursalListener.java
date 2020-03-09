@@ -82,7 +82,7 @@ public class SucursalListener extends Thread {
     }
 
     private Boolean validateMessage(String message){
-        return (message!=null) && (message.contains("vnt"));
+        return (message!=null);
     }
 
     public int getTotal93() {

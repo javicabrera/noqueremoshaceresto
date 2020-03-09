@@ -35,9 +35,9 @@ public class SurtidorGui extends Thread {
             DataOutputStream out = new DataOutputStream(sucursalSocket.getOutputStream());
 
             while(!this.sucursalSocket.isClosed()){
-                TimeUnit.SECONDS.sleep(10);
                 System.out.println("nueva venta!");
                 Boolean response = nuevaVenta(in, out);
+                this.sleep(5000);
             }
 
 
@@ -49,11 +49,11 @@ public class SurtidorGui extends Thread {
     private Boolean nuevaVenta(DataInputStream in, DataOutputStream out) throws IOException {
         this.disponible = false;
         out.writeUTF("vnt-kerosene-6699");
-        if(in.readUTF().equals("ok")) {
+//        if(in.readUTF().equals("ok")) {
             System.out.println("surtidor: ok, venta finalizada");
             return true;
-        }
-        return false;
+//        }
+//        return false;
     }
 
     // Actualizar precios!!

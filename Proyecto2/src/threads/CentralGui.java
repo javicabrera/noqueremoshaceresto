@@ -89,11 +89,11 @@ public class CentralGui extends Thread {
         sendBroadcast("act-" + tipoCombustible + "-" + nuevoPrecio, surtidores);
     }
 
-    private void sendBroadcast(String message, ArrayList<Socket> surtidores){
+    private void sendBroadcast(String message, ArrayList<Socket> sucursales){
         String response;
         int i = 0;
         try {
-            for(Socket surtidor : surtidores){
+            for(Socket surtidor : sucursales){
                 DataInputStream in = new DataInputStream(surtidor.getInputStream());
                 DataOutputStream out = new DataOutputStream(surtidor.getOutputStream());
                 do{

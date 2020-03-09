@@ -39,6 +39,6 @@ public class SurtidorListener extends Thread {
     }
 
     private Boolean validateMessage(String message){
-        return (message!=null) && (message.contains("vnt"));
+        return (message!=null);
     }
 }
