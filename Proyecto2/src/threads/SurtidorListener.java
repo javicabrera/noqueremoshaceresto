@@ -27,8 +27,8 @@ public class SurtidorListener extends Thread {
                 if(validateMessage(message)){
                     //TODO: actualizar la base de datos aquí
                     outCentral.writeUTF(message);
-                    if(inCentral.readUTF() == "ok")     outSurtidor.writeUTF("ok");
-                    else                                outSurtidor.writeUTF("err");
+                    if(inCentral.readUTF().equals("ok"))     outSurtidor.writeUTF("ok");
+                    else                                     outSurtidor.writeUTF("err");
                 }else{
                     outSurtidor.writeUTF("err");
                 }

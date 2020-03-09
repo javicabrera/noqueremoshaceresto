@@ -27,6 +27,7 @@ public class Sucursal {
         AdminSurtidores admin;
 
         try{
+            // Se inicia el server
             server = new ServerSocket(PORT);
             System.out.println("servidor sucursal iniciado. Esperando por surtidores...");
             admin = new AdminSurtidores();
