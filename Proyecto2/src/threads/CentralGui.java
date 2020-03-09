@@ -93,20 +93,21 @@ public class CentralGui extends Thread {
         String response;
         int i = 0;
         try {
-            for(Socket surtidor : sucursales){
-                DataInputStream in = new DataInputStream(surtidor.getInputStream());
-                DataOutputStream out = new DataOutputStream(surtidor.getOutputStream());
-                do{
-                    i++;
-                    System.out.println("intento #" + i + " - actualizando el surtidor con puerto " + surtidor.getPort());
-                    out.writeUTF(message);
-                    response = in.readUTF();
-                    System.out.println("->incomming response from sendBroadcast in CentralGui: " + message);
-                    if(i>= MAX_INTENTOS){
-                        System.out.println("CentralGui: ERROR ENVIANDO ACTUALIZACIÓN!");
-                        break;
-                    }
-                }while(!response.equals("ok"));
+            for(Socket sucursal : sucursales){
+                DataInputStream in = new DataInputStream(sucursal.getInputStream());
+                DataOutputStream out = new DataOutputStream(sucursal.getOutputStream());
+//                do{
+//                    i++;
+//                    System.out.println("intento #" + i + " - actualizando el surtidor con puerto " + sucursal.getPort());
+                System.out.println("Enviando actualización !");
+                out.writeUTF(message);
+//                    response = in.readUTF();
+//                    System.out.println("->incomming response from sendBroadcast in CentralGui: " + response);
+//                    if(i>= MAX_INTENTOS){
+//                        System.out.println("CentralGui: ERROR ENVIANDO ACTUALIZACIÓN!");
+//                        break;
+//                    }
+//                }while(!response.equals("ok"));
             }
         } catch (IOException e) {
             e.printStackTrace();

@@ -123,7 +123,7 @@ public class Surtidor {
                     double nuevoPrecio = Double.valueOf(splitted[2]);
                     actualizarCombustible(tipoCompbustible, nuevoPrecio, surtidor1);
                     System.out.println("nuevos precios: " + surtidor1);
-                    out.writeUTF("ok");
+//                    out.writeUTF("ok");
                 }
 
                 if(message.equals("end")) break;

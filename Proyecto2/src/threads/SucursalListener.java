@@ -50,11 +50,11 @@ public class SucursalListener extends Thread {
                 // Si el mensaje es válido, se actualiza el valor de la gasolina que corresponda
                 // Sino, se contesta con un mensaje de error
                 if(validateMessage(message)){
-                    System.out.println("recibiento desde central: " + message);
+                    System.out.println("recibiento desde central para actualizar: " + message);
                     updateGas(message);
-                    out.writeUTF("ok");
+//                    out.writeUTF("ok");
                 }else{
-                    out.writeUTF("err");
+//                    out.writeUTF("err");
                 }
             }
         }catch(IOException e){
