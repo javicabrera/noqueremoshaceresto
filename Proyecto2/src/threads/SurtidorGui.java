@@ -1,5 +1,7 @@
 package threads;
 
+import sun.lwawt.macosx.CSystemTray;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -30,25 +32,50 @@ public class SurtidorGui extends Thread {
     @Override
     public void run() {
         Scanner scanner = new Scanner(System.in);
+        int option;
+        String tipo;
+        String cantidad;
         try {
             DataInputStream in = new DataInputStream(sucursalSocket.getInputStream());
             DataOutputStream out = new DataOutputStream(sucursalSocket.getOutputStream());
 
             while(!this.sucursalSocket.isClosed()){
-                System.out.println("nueva venta!");
-                Boolean response = nuevaVenta(in, out);
-                this.sleep(10000);
+                System.out.println("~~~ NUEVA VENTA ~~~");
+                System.out.println("1 - bencina 93");
+                System.out.println("2 - bencina 95");
+                System.out.println("3 - bencina 97");
+                System.out.println("4  - diesel");
+                System.out.println("5  - kerosene");
+
+                option = scanner.nextInt();
+
+                switch (option){
+                    case 1: tipo = "93";
+                    break;
+                    case 2: tipo = "95";
+                    break;
+                    case 3: tipo = "97";
+                    break;
+                    case 4: tipo = "diesel";
+                    break;
+                    case 5: tipo = "kerosene";
+                    break;
+                    default: tipo = "kerosene";
+                    break;
+                }
+
+                cantidad = scanner.next();
+
+                Boolean response = nuevaVenta("vnt-" + option + "-" + cantidad, in, out);
             }
-
-
-        } catch(IOException | InterruptedException e){
+        } catch(IOException e){
             e.printStackTrace();
         }
     }
 
-    private Boolean nuevaVenta(DataInputStream in, DataOutputStream out) throws IOException {
+    private Boolean nuevaVenta(String message, DataInputStream in, DataOutputStream out) throws IOException {
         this.disponible = false;
-        out.writeUTF("vnt-kerosene-6699");
+        out.writeUTF(message);
 //        if(in.readUTF().equals("ok")) {
             System.out.println("surtidor: ok, venta finalizada");
             return true;

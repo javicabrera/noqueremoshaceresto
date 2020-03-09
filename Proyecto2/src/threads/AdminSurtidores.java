@@ -50,7 +50,7 @@ public class AdminSurtidores extends Thread {
     private void sendBroadcast(String message) throws IOException {
         DataOutputStream out = null;
         for(Socket surtidor : this.surtidores){
-            System.out.println("...actualizando!");
+            System.out.println("...actualizando!: " + message);
             out = new DataOutputStream(surtidor.getOutputStream());
             out.writeUTF(message);
         }
