@@ -3,10 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package proyecto2;
-
-import threads.CentralGui;
-import threads.SucursalListener;
+package Central;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -17,7 +14,7 @@ import java.util.ArrayList;
  *
  * @author Javiera Cabrera
  */
-public class Central {
+public class Server {
     public static void main(String[] args) {
         ArrayList<SucursalListener> listeners = new ArrayList<>();
         SucursalListener thread = null;

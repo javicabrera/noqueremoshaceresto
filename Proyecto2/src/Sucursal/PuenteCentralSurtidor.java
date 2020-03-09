@@ -1,4 +1,4 @@
-package threads;
+package Sucursal;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -10,16 +10,16 @@ import java.util.ArrayList;
 // y los gestiona. Además crea un hilo que quda a la escucha de las
 // ventas de los surtidores.
 
-public class AdminSurtidores extends Thread {
+public class PuenteCentralSurtidor extends Thread {
     ArrayList<Socket> surtidores;
-    ArrayList<SurtidorListener> listeners;
+    ArrayList<Sucursal> listeners;
     Socket socketCentral;
     final String HOST = "35.247.228.145"; // Ip pública de la máquina virtual
     final int CENTRAL_PORT = 80;  // este corresponde al puerto mediante la maquina virtual está escuchando
 
-    public AdminSurtidores() throws IOException {
+    public PuenteCentralSurtidor() throws IOException {
         this.surtidores = new ArrayList<Socket>();
-        this.listeners = new ArrayList<SurtidorListener>();
+        this.listeners = new ArrayList<Sucursal>();
         socketCentral = new Socket(HOST, CENTRAL_PORT);
     }
 
@@ -59,7 +59,7 @@ public class AdminSurtidores extends Thread {
     public Boolean addSurtidor(Socket nuevoSurtidor){
         if(nuevoSurtidor == null)
             return false;
-        SurtidorListener th = new SurtidorListener(this.socketCentral, nuevoSurtidor);
+        Sucursal th = new Sucursal(this.socketCentral, nuevoSurtidor);
         th.start();
         listeners.add(th); // Se crea un hilo por cada surtidor el cual escuchará por mensajes
         this.surtidores.add(nuevoSurtidor);

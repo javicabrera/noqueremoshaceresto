@@ -1,4 +1,4 @@
-package threads;
+package Surtidor;
 
 import sun.lwawt.macosx.CSystemTray;
 

@@ -1,6 +1,4 @@
-package proyecto2;
-
-import threads.AdminSurtidores;
+package Sucursal;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -17,20 +15,20 @@ import java.util.ArrayList;
  *
  * @author Javiera Cabrera
  */
-public class Sucursal {
+public class Server {
 
     public static void main(String[] args) throws IOException {
         final int PORT = 4200;
         ArrayList<Socket> surtidores = new ArrayList<Socket>();
         ServerSocket server = null;
         Socket sc = null;
-        AdminSurtidores admin;
+        PuenteCentralSurtidor admin;
 
         try{
             // Se inicia el server
             server = new ServerSocket(PORT);
             System.out.println("servidor sucursal iniciado. Esperando por surtidores...");
-            admin = new AdminSurtidores();
+            admin = new PuenteCentralSurtidor();
             admin.start();
 
             while(!server.isClosed()){

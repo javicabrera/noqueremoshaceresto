@@ -3,9 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package proyecto2;
-
-import threads.SurtidorGui;
+package Surtidor;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

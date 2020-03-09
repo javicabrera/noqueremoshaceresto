@@ -1,15 +1,15 @@
-package threads;
+package Sucursal;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-public class SurtidorListener extends Thread {
+public class Sucursal extends Thread {
     private Socket socketCentral;
     private Socket socketSurtidor;
 
-    public SurtidorListener(Socket socketCentral, Socket socketSurtidor){
+    public Sucursal(Socket socketCentral, Socket socketSurtidor){
         this.socketCentral = socketCentral;
         this.socketSurtidor = socketSurtidor;
     }
