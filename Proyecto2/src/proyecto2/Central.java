@@ -25,7 +25,6 @@ public class Central {
         Socket sc = null;
         final int PORT = 80; // En la práctica, este parámetro debería corresponder con el puerto que la maquina virtual tenga habilitado
 
-
         try{
             server = new ServerSocket(PORT);
             System.out.println("servidor iniciado. Esperano por clientes...");
