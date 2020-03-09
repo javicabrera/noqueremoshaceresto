@@ -36,6 +36,7 @@ public class SurtidorGui extends Thread {
 
             while(!this.sucursalSocket.isClosed()){
                 TimeUnit.SECONDS.sleep(10);
+                System.out.println("nueva venta!");
                 Boolean response = nuevaVenta(in, out);
             }
 
