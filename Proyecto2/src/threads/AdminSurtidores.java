@@ -35,10 +35,10 @@ public class AdminSurtidores extends Thread {
                 if(validateMessage(message)){
                     //enviar broadcast
                     sendBroadcast(message);
-                    outCentral.writeUTF("ok");
+//                    outCentral.writeUTF("ok");
                 }else{
-                    System.out.println("ERROR!");
-                    outCentral.writeUTF("err");
+                    System.out.println("ERROR! actualizando surtidor !!");
+//                    outCentral.writeUTF("err");
                 }
             }
 
