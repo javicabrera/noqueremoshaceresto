@@ -49,7 +49,10 @@ public class SurtidorGui extends Thread {
     private Boolean nuevaVenta(DataInputStream in, DataOutputStream out) throws IOException {
         this.disponible = false;
         out.writeUTF("vnt-kerosene-6699");
-        if(in.readUTF().equals("ok")) return true;
+        if(in.readUTF().equals("ok")) {
+            System.out.println("surtidor: ok, venta finalizada");
+            return true;
+        }
         return false;
     }
 

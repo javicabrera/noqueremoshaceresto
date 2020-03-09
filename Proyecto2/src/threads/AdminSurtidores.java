@@ -67,6 +67,6 @@ public class AdminSurtidores extends Thread {
     }
 
     private Boolean validateMessage(String message){
-        return (message!=null) && (message.contains("act"));
+        return (message!=null);
     }
 }
