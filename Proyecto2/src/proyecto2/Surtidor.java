@@ -106,6 +106,8 @@ public class Surtidor {
         try {
             Socket sc = new Socket(HOST, PORT);
 
+            // echar a andar el hilo del SurtigorGui
+
             in = new DataInputStream(sc.getInputStream());
             out = new DataOutputStream(sc.getOutputStream());
 
@@ -129,9 +131,6 @@ public class Surtidor {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-
     }
 
     private static void actualizarCombustible(String tipoCompbustible, double nuevoPrecio, Surtidor surtidor) {

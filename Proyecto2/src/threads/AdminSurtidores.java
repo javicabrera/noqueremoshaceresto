@@ -7,9 +7,9 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 // Ésta clase atiende losmensajes provenientes de los surtidores
-// y los gestiona
-// * Si llega un mensaje que representa una venta, acualiza la
-//   base de datos y envía la actualización a la central
+// y los gestiona. Además crea un hilo que quda a la escucha de las
+// ventas de los surtidores.
+
 public class AdminSurtidores extends Thread {
     ArrayList<Socket> surtidores;
     ArrayList<SurtidorListener> listeners;
@@ -50,7 +50,7 @@ public class AdminSurtidores extends Thread {
     private void sendBroadcast(String message) throws IOException {
         DataOutputStream out = null;
         for(Socket surtidor : this.surtidores){
-            System.out.println("... actualizando!");
+            System.out.println("...actualizando!");
             out = new DataOutputStream(surtidor.getOutputStream());
             out.writeUTF(message);
         }
