@@ -31,7 +31,7 @@ public class AdminSurtidores extends Thread {
             String message;
             while(!socketCentral.isClosed()){
                 message = inCentral.readUTF();
-                System.out.println("messae readed !");
+                System.out.println("messae readed en admin surtidores: " + message);
                 if(validateMessage(message)){
                     //enviar broadcast
                     sendBroadcast(message);
