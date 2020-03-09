@@ -13,13 +13,13 @@ import java.net.Socket;
 
 public class SucursalListener extends Thread {
     private Socket sucursalSocket;
-    private int total93;
-    private int total95;
-    private int total97;
-    private int totalDiesel;
-    private int totalKerosene;
+    private double total93;
+    private double total95;
+    private double total97;
+    private double totalDiesel;
+    private double totalKerosene;
 
-    public SucursalListener(Socket sucursalDocket, int total93, int total95, int total97, int totalDiesel, int totalKerosene){
+    public SucursalListener(Socket sucursalDocket, double total93, double total95, double total97, double totalDiesel, double totalKerosene){
         this.sucursalSocket = sucursalDocket;
         this.total93 = total93;
         this.total95 = total95;
@@ -85,15 +85,15 @@ public class SucursalListener extends Thread {
         return (message!=null);
     }
 
-    public int getTotal93() {
+    public double getTotal93() {
         return total93;
     }
 
-    public void setTotal93(int total93) {
+    public void setTotal93(double total93) {
         this.total93 = total93;
     }
 
-    public int getTotal95() {
+    public double getTotal95() {
         return total95;
     }
 
@@ -101,7 +101,7 @@ public class SucursalListener extends Thread {
         this.total95 = total95;
     }
 
-    public int getTotal97() {
+    public double getTotal97() {
         return total97;
     }
 
@@ -109,7 +109,7 @@ public class SucursalListener extends Thread {
         this.total97 = total97;
     }
 
-    public int getTotalDiesel() {
+    public double getTotalDiesel() {
         return totalDiesel;
     }
 
@@ -117,7 +117,7 @@ public class SucursalListener extends Thread {
         this.totalDiesel = totalDiesel;
     }
 
-    public int getTotalKerosene() {
+    public double getTotalKerosene() {
         return totalKerosene;
     }
 
