@@ -9,6 +9,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import ventana.VentanaSurtidor;
 
 /**
  *
@@ -21,6 +22,8 @@ public class Surtidor {
     private double gasolina97;
     private double diesel;
     private double kerosene;
+    private VentanaSurtidor vista;
+    private static Surtidor s;
 
     public Surtidor(int id, double gasolina93, double gasolina95, double gasolina97, double diesel, double kerosene) {
         this.id = id;
@@ -38,6 +41,8 @@ public class Surtidor {
         this.gasolina97 = 100;
         this.diesel = 100;
         this.kerosene = 100;
+        vista= new VentanaSurtidor();
+        vista.setVisible(true);
     }
 
     public double getGasolina93() {
@@ -96,6 +101,7 @@ public class Surtidor {
 
 
     public static void main(String[] args) {
+        s= new Surtidor();
         final String HOST = "127.0.0.1";
 //        final String HOST = "35.247.228.145"; //virtual machine
         final int PORT = 4200;

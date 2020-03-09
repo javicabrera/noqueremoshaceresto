@@ -5,12 +5,20 @@
  */
 package ventana;
 
+import proyecto2.Central;
+
 /**
  *
  * @author Yarixa
  */
 public class VentanaEmpresa extends javax.swing.JFrame {
     private int opcion;
+    private int g93;
+    private int g95;
+    private int g97;
+    private int diesel;
+    private int kerosene;
+    private Central central;
     /**
      * Creates new form VentanaEmpresa
      */
@@ -48,7 +56,8 @@ public class VentanaEmpresa extends javax.swing.JFrame {
         nuevo97 = new javax.swing.JTextField();
         nuevoDiesel = new javax.swing.JTextField();
         nuevoKerosene = new javax.swing.JTextField();
-        botonGuardar = new javax.swing.JButton();
+        botonGenerarReporte = new javax.swing.JButton();
+        botonGuardar1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -113,6 +122,11 @@ public class VentanaEmpresa extends javax.swing.JFrame {
         actualKerosene.setText(" ");
 
         nuevo93.setText(" ");
+        nuevo93.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nuevo93ActionPerformed(evt);
+            }
+        });
 
         nuevo95.setText(" ");
         nuevo95.addActionListener(new java.awt.event.ActionListener() {
@@ -122,12 +136,39 @@ public class VentanaEmpresa extends javax.swing.JFrame {
         });
 
         nuevo97.setText(" ");
+        nuevo97.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nuevo97ActionPerformed(evt);
+            }
+        });
 
         nuevoDiesel.setText(" ");
+        nuevoDiesel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nuevoDieselActionPerformed(evt);
+            }
+        });
 
         nuevoKerosene.setText(" ");
+        nuevoKerosene.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nuevoKeroseneActionPerformed(evt);
+            }
+        });
 
-        botonGuardar.setText("Guardar Cambios");
+        botonGenerarReporte.setText("Generar Reporte");
+        botonGenerarReporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonGenerarReporteActionPerformed(evt);
+            }
+        });
+
+        botonGuardar1.setText("Guardar Cambios");
+        botonGuardar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonGuardar1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -141,7 +182,6 @@ public class VentanaEmpresa extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel3)
@@ -167,12 +207,19 @@ public class VentanaEmpresa extends javax.swing.JFrame {
                                         .addComponent(nuevo95, javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(nuevo97, javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(nuevoDiesel, javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(nuevoKerosene, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                                        .addComponent(nuevoKerosene, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(24, 24, 24)
+                                        .addComponent(botonGuardar1)))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(botonGuardar)
-                .addGap(130, 130, 130))
+                .addComponent(botonGenerarReporte)
+                .addGap(46, 46, 46))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -217,9 +264,11 @@ public class VentanaEmpresa extends javax.swing.JFrame {
                         .addComponent(nuevoDiesel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(nuevoKerosene, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
-                .addComponent(botonGuardar)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botonGenerarReporte)
+                    .addComponent(botonGuardar1))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -245,6 +294,7 @@ public class VentanaEmpresa extends javax.swing.JFrame {
     private void option93ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_option93ActionPerformed
         // TODO add your handling code here:
         this.opcion=1;
+        System.out.println("opcion 1");
     }//GEN-LAST:event_option93ActionPerformed
 
     private void option95ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_option95ActionPerformed
@@ -253,7 +303,7 @@ public class VentanaEmpresa extends javax.swing.JFrame {
     }//GEN-LAST:event_option95ActionPerformed
 
     private void nuevo95ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevo95ActionPerformed
-        // TODO add your handling code here:
+        this.g95=Integer.valueOf(nuevo95.getText());
         
     }//GEN-LAST:event_nuevo95ActionPerformed
 
@@ -271,6 +321,36 @@ public class VentanaEmpresa extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.opcion=5;
     }//GEN-LAST:event_optionKeroseneActionPerformed
+
+    private void botonGenerarReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGenerarReporteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonGenerarReporteActionPerformed
+
+    private void botonGuardar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardar1ActionPerformed
+        // TODO add your handling code here:
+        if(option95.isSelected()){
+            
+        }
+    }//GEN-LAST:event_botonGuardar1ActionPerformed
+
+    private void nuevo93ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevo93ActionPerformed
+        g93=Integer.valueOf(nuevo93.getText());   
+        System.out.println("Nuevo uno");
+    }//GEN-LAST:event_nuevo93ActionPerformed
+
+    private void nuevo97ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevo97ActionPerformed
+        // TODO add your handling code here:
+        this.g97=Integer.valueOf(nuevo97.getText());
+    }//GEN-LAST:event_nuevo97ActionPerformed
+
+    private void nuevoDieselActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoDieselActionPerformed
+        this.diesel=Integer.valueOf(nuevoDiesel.getText());        // TODO add your handling code here:
+    }//GEN-LAST:event_nuevoDieselActionPerformed
+
+    private void nuevoKeroseneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoKeroseneActionPerformed
+        this.kerosene=Integer.valueOf(nuevoKerosene.getText());
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nuevoKeroseneActionPerformed
 
     /**
      * @param args the command line arguments
@@ -305,6 +385,7 @@ public class VentanaEmpresa extends javax.swing.JFrame {
                 new VentanaEmpresa().setVisible(true);
             }
         });
+    
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -313,7 +394,8 @@ public class VentanaEmpresa extends javax.swing.JFrame {
     private javax.swing.JTextField actual95;
     private javax.swing.JTextField actualDiesel;
     private javax.swing.JTextField actualKerosene;
-    private javax.swing.JButton botonGuardar;
+    private javax.swing.JButton botonGenerarReporte;
+    private javax.swing.JButton botonGuardar1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

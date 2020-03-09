@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import ventana.VentanaSucursal;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -18,8 +19,14 @@ import java.util.ArrayList;
  * @author Javiera Cabrera
  */
 public class Sucursal {
-
+    private VentanaSucursal vista;
+    private static Sucursal s;
+    public Sucursal(){
+        vista= new VentanaSucursal();
+        vista.setVisible(true);
+    } 
     public static void main(String[] args) throws IOException {
+        s= new Sucursal();
         final int PORT = 4200;
         ArrayList<Socket> surtidores = new ArrayList<Socket>();
         ServerSocket server = null;

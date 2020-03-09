@@ -10,13 +10,21 @@ import threads.CentralGui;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import ventana.VentanaEmpresa;
 
 /**
  *
  * @author Javiera Cabrera
  */
 public class Central {
+    private static Central c;
+    private VentanaEmpresa vista;
+    public Central(){
+        vista=new VentanaEmpresa();
+        vista.setVisible(true);
+    }
     public static void main(String[] args) {
+        c= new Central();
         ServerSocket server = null;
         Socket sc = null;
         final int PORT = 6900; // En la práctica, este parámetro debería corresponder con el puerto que la maquina virtual tenga habilitado
@@ -27,6 +35,7 @@ public class Central {
             CentralGui gui = new CentralGui(server); // Este objeto extiende a Thread, por o tanto implementa el método run que se ejecuta en un hilo de ejecución aparte            
             sc = server.accept();  // Se espera la conexión del primer surtidor
             System.out.println("cliente conectado...");
+            
             gui.addSocket(sc);
             gui.start(); // gui.start() ??  // Luego, se inicia la GUI
 

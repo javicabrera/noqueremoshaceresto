@@ -24,6 +24,7 @@ public class CentralGui extends Thread {
         this.sucursales = new ArrayList<>();
         this.scanner = new Scanner(System.in);
         this.vista= new VentanaEmpresa();
+        
     }
 
     @Override
