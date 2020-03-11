@@ -85,7 +85,6 @@ public class CentralGui extends Thread {
 
         switch (option){
             case 1: tipoCombustible = "93";
-
                 break;
             case 2: tipoCombustible = "95";
                 break;
@@ -100,7 +99,6 @@ public class CentralGui extends Thread {
 
         System.out.print("ingrese nuevo precio: ");
         nuevoPrecio = scanner.nextDouble();
-
         sendBroadcast("act-" + tipoCombustible + "-" + nuevoPrecio, sucursales);
     }
 

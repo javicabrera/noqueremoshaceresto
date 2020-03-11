@@ -22,23 +22,13 @@ public class SucursalListener extends Thread {
         String message;
         try {
             DataInputStream in = new DataInputStream(this.sucursalSocket.getInputStream());
-            DataOutputStream out = new DataOutputStream(this.sucursalSocket.getOutputStream());
 
             while(!this.sucursalSocket.isClosed()){
                 message = in.readUTF();
-
-                if(validateMessage(message)){
-                    System.out.println(message);
-                }
+                System.out.println(message);
             }
         }catch(IOException e){
             e.printStackTrace();
         }
     }
-
-
-    private Boolean validateMessage(String message){
-        return (message!=null);
-    }
-
 }

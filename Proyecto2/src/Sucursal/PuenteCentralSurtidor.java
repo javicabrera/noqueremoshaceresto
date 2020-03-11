@@ -21,7 +21,7 @@ public class PuenteCentralSurtidor extends Thread {
     public PuenteCentralSurtidor() throws IOException {
         this.surtidores = new ArrayList<Socket>();
         this.listeners = new ArrayList<Sucursal>();
-        this.db = new SingletonBD();
+        this.db = SingletonBD.getInstance();
         socketCentral = new Socket(HOST, CENTRAL_PORT);
         System.out.println("Puente iniciado !!");
     }

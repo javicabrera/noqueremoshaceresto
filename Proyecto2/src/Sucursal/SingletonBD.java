@@ -18,32 +18,44 @@ import java.io.PrintWriter;
  * @author Javiera Cabrera
  */
 public class SingletonBD {
-    
     public int[][] BD;
     public int contador;
-    public SingletonBD() throws IOException{
+    private static final SingletonBD instance = new SingletonBD();
+
+    public SingletonBD() {
         BD= new int[200][3];
         BD=leerBD(BD);
         contador=0;
     }
-    public int[][] leerBD(int[][] m) throws FileNotFoundException, IOException{
-        File BD= new File("Sucursal/SucursalBD.txt");
-        FileReader fr= new FileReader(BD);
-        BufferedReader br= new BufferedReader(fr);
-        String linea;
-        int i=0;
-        while((linea=br.readLine())!=null){
-            String[] line= linea.split(" ");
-            int id= Integer.valueOf(line[0]);
-            int combustible= Integer.valueOf(line[1]);
-            int litros= Integer.valueOf(line[2]);
-            m[i][0]=id;
-            m[i][1]=combustible;
-            m[i][2]=litros;            
-            i++;
+
+    public static SingletonBD getInstance(){
+        return instance;
+    }
+    public int[][] leerBD(int[][] m) {
+        File BD = null;
+        FileReader fr = null;
+        BufferedReader br = null;
+        try {
+            BD= new File("Sucursal/SucursalBD.txt");
+            fr= new FileReader(BD);
+            br= new BufferedReader(fr);
+            String linea;
+            int i=0;
+            while((linea=br.readLine())!=null){
+                String[] line= linea.split(" ");
+                int id= Integer.valueOf(line[0]);
+                int combustible= Integer.valueOf(line[1]);
+                int litros= Integer.valueOf(line[2]);
+                m[i][0]=id;
+                m[i][1]=combustible;
+                m[i][2]=litros;
+                i++;
+            }
+            contador=i;
+            fr.close();
+        }catch (IOException e){
+            e.printStackTrace();
         }
-        contador=i;
-        fr.close();
         return m;
     }
     public void escribirBD() throws IOException{
@@ -70,7 +82,7 @@ public class SingletonBD {
             case 5: return "Se han vendido "+ contador(tipo)+" de combustible Kerosene";
             default: return "ERROR";
         }
-    }    
+    }
     public int contador(int t){
         int litros=0;
         for (int i = 0; i < BD.length; i++) {

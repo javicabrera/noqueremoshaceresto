@@ -19,7 +19,7 @@ public class Sucursal extends Thread {
     public Sucursal(Socket socketCentral, Socket socketSurtidor) throws IOException {
         this.socketCentral = socketCentral;
         this.socketSurtidor = socketSurtidor;
-        db = new SingletonBD();
+        db = SingletonBD.getInstance();
     }
 
     @Override
@@ -34,9 +34,6 @@ public class Sucursal extends Thread {
                 String [] splitted = message.split("-");
                 if(splitted[0].equals("vtn"))
                     guardarVenta(splitted);
-
-//                outCentral.writeUTF(message);
-
             }
             this.db.escribirBD();
         } catch (IOException e) {
