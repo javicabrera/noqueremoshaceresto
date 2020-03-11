@@ -66,12 +66,14 @@ public class SingletonBD {
         }
         fw.close();
     }
+
     public void añadirDato(int id, int tipo, int litros){
         BD[contador][0]=id;
         BD[contador][1]=tipo;
         BD[contador][2]=litros;
         contador++;
     }
+
     public String reportePorLitros(int tipo){
         switch (tipo)
         {

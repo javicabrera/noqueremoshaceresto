@@ -26,10 +26,10 @@ public class Sucursal extends Thread {
     public void run() {
         try {
             DataInputStream inSurtidor = new DataInputStream(socketSurtidor.getInputStream());
-            DataOutputStream outCentral = new DataOutputStream(socketCentral.getOutputStream());
             String message;
             while((!socketSurtidor.isClosed()) && (!socketCentral.isClosed())){
                 message = inSurtidor.readUTF();
+                System.out.println("Recibiendo en sucursal: " + message);
                 //TODO: actualizar la base de datos aquí
                 String [] splitted = message.split("-");
                 if(splitted[0].equals("vtn"))
