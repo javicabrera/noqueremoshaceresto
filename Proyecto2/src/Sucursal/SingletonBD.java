@@ -31,7 +31,9 @@ public class SingletonBD {
     public static SingletonBD getInstance(){
         return instance;
     }
+
     public int[][] leerBD(int[][] m) {
+        System.out.println("----> test !!");
         File BD = null;
         FileReader fr = null;
         BufferedReader br = null;
