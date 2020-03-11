@@ -20,9 +20,11 @@ import java.io.PrintWriter;
 public class SingletonBD {
     
     public int[][] BD;
+    public int contador;
     public SingletonBD(int n) throws IOException{
         BD= new int[200][3];
         BD=leerBD(BD);
+        contador=0;
     }
     public int[][] leerBD(int[][] m) throws FileNotFoundException, IOException{
         File BD= new File("SucursalBD.txt");
@@ -40,12 +42,23 @@ public class SingletonBD {
             m[i][2]=litros;            
             i++;
         }
+        contador=i;
+        fr.close();
         return m;
     }
     public void escribirBD(int[][] m) throws IOException{
         FileWriter BD= new FileWriter("SucursalBD.txt");
         PrintWriter pw= new PrintWriter(BD);
-
+        for(int i=0; i<m.length; i++){
+            pw.println(m[i][0]+" "+m[i][1]+" "+m[i][2]);
+        }
+        BD.close();
+    }
+    public void añadirDato(int[] id, int[] tipo, int[] litros){
+        BD[contador][0]=id;
+        BD[contador][1]=tipo;
+        BD[contador][2]=litros;
+        contador++;
     }
     public void reportePorLitros(int tipo){
         switch (tipo)
@@ -67,10 +80,10 @@ public class SingletonBD {
                 break;
               
         }
-    }
+    }    
     public int contador(int t){
         int litros=0;
-        for (int i = 0; i < BD[0].length; i++) {
+        for (int i = 0; i < BD.length; i++) {
             if(t==BD[i][1]){
                 litros+=BD[i][2];
             }
