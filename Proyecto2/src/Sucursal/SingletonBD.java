@@ -68,6 +68,7 @@ public class SingletonBD {
     }
 
     public void añadirDato(int id, int tipo, int litros){
+        System.out.println("AÑADIR DATO");
         BD[contador][0]=id;
         BD[contador][1]=tipo;
         BD[contador][2]=litros;

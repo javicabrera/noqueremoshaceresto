@@ -30,11 +30,7 @@ public class Sucursal extends Thread {
             while((!socketSurtidor.isClosed()) && (!socketCentral.isClosed())){
                 message = inSurtidor.readUTF();
                 System.out.println("Recibiendo en sucursal: " + message);
-                System.out.println("HOLA");
-                String [] splitted = message.split("-");
-                System.out.println(" 1 "+splitted[0]);
-                System.out.println(" 2 "+splitted[1]);
-                System.out.println(" 3 "+splitted[2]);
+                String [] splitted = message.split("-");              
                 if(splitted[0].equals("vnt")){
                     System.out.println("HOLA");
                     guardarVenta(splitted);
