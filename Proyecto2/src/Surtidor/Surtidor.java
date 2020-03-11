@@ -123,7 +123,6 @@ public class Surtidor {
                     System.out.println("nuevos precios: " + surtidor1);
 //                    out.writeUTF("ok");
                 }
-
                 if(message.equals("end")) break;
             }
             sc.close();
