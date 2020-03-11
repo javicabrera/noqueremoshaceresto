@@ -38,12 +38,15 @@ public class SingletonBD {
         FileReader fr = null;
         BufferedReader br = null;
         try {
+            System.out.println("dentro del try");
             BD= new File("Sucursal/SucursalBD.txt");
             fr= new FileReader(BD);
             br= new BufferedReader(fr);
             String linea;
             int i=0;
+            System.out.println("antes de while");
             while((linea=br.readLine())!=null){
+                System.out.println("dentro del while");
                 String[] line= linea.split(" ");
                 int id= Integer.valueOf(line[0]);
                 int combustible= Integer.valueOf(line[1]);
