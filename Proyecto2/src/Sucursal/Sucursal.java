@@ -30,7 +30,7 @@ public class Sucursal extends Thread {
             while((!socketSurtidor.isClosed()) && (!socketCentral.isClosed())){
                 message = inSurtidor.readUTF();
                 System.out.println("Recibiendo en sucursal: " + message);
-                //TODO: actualizar la base de datos aquí
+                System.out.println("HOLA");
                 String [] splitted = message.split("-");
                 System.out.println(" 1 "+splitted[0]);
                 System.out.println(" 2 "+splitted[1]);
