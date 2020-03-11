@@ -50,7 +50,7 @@ public class PuenteCentralSurtidor extends Thread {
                     reporte = db.reportePorLitros(5);
                     outCentral.writeUTF(reporte);
                 }else{
-                    //enviar broadcast
+                    //enviar broadcast para actualizar surtidores
                     sendBroadcast(message);
                 }
             }

@@ -27,7 +27,7 @@ public class SingletonBD {
         contador=0;
     }
     public int[][] leerBD(int[][] m) throws FileNotFoundException, IOException{
-        File BD= new File("SucursalBD.txt");
+        File BD= new File("Sucursal/SucursalBD.txt");
         FileReader fr= new FileReader(BD);
         BufferedReader br= new BufferedReader(fr);
         String linea;
@@ -47,7 +47,7 @@ public class SingletonBD {
         return m;
     }
     public void escribirBD() throws IOException{
-        FileWriter fw = new FileWriter("SucursalBD.txt");
+        FileWriter fw = new FileWriter("Sucursal/SucursalBD.txt");
         PrintWriter pw = new PrintWriter(fw);
         for(int i=0; i<BD.length; i++){
             pw.println(BD[i][0]+" "+BD[i][1]+" "+BD[i][2]);

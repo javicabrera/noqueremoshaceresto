@@ -37,7 +37,7 @@ public class CentralGui extends Thread {
             switch (option){
                 case 1: actualizarPrecio(this.sucursales);
                     break;
-                case 2: mostrarReporte(this.sucursales);
+                case 2: solicitarReporte(this.sucursales);
                     break;
                 case 3: closeServer(this.server);
                     break;
@@ -47,19 +47,11 @@ public class CentralGui extends Thread {
         }
     }
 
-    private void mostrarReporte(ArrayList<Socket> sucursales){
+    private void solicitarReporte(ArrayList<Socket> sucursales){
         try {
             for(Socket sucursal : sucursales){
-                DataInputStream in = new DataInputStream(sucursal.getInputStream());
                 DataOutputStream out = new DataOutputStream((sucursal.getOutputStream()));
-
                 out.writeUTF("rpt");
-                System.out.println(in.readUTF());
-                System.out.println(in.readUTF());
-                System.out.println(in.readUTF());
-                System.out.println(in.readUTF());
-                System.out.println(in.readUTF());
-                System.out.println(in.readUTF());
             }
         }catch (IOException e){
             e.printStackTrace();
