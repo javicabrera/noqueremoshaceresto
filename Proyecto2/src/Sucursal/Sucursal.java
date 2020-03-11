@@ -32,7 +32,7 @@ public class Sucursal extends Thread {
                 System.out.println("Recibiendo en sucursal: " + message);
                 //TODO: actualizar la base de datos aquí
                 String [] splitted = message.split("-");
-                if(splitted[0].equals("vtn"))
+                if(splitted[0].equals("vnt"))
                     guardarVenta(splitted);
             }
             this.db.escribirBD();
