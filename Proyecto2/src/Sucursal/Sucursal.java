@@ -59,7 +59,7 @@ public class Sucursal extends Thread {
             break;
         }
         int litros = Integer.valueOf(splitted[2]);
-
+        System.out.println("Venta "+tipo+"  "+litros);
         this.db.añadirDato(id, tipo, litros);
     }
 
