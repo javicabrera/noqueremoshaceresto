@@ -56,7 +56,7 @@ public class CentralGui extends Thread {
         }
     }
 
-    private void actualizarPrecio(ArrayList<Socket> surtidores) {
+    private void actualizarPrecio(ArrayList<Socket> sucursales) {
         String tipoCombustible = "";
         double nuevoPrecio = 0.0;
         int option;
@@ -71,6 +71,7 @@ public class CentralGui extends Thread {
 
         switch (option){
             case 1: tipoCombustible = "93";
+              
                 break;
             case 2: tipoCombustible = "95";
                 break;
@@ -86,7 +87,7 @@ public class CentralGui extends Thread {
         System.out.print("ingrese nuevo precio: ");
         nuevoPrecio = scanner.nextDouble();
 
-        sendBroadcast("act-" + tipoCombustible + "-" + nuevoPrecio, surtidores);
+        sendBroadcast("act-" + tipoCombustible + "-" + nuevoPrecio, sucursales);
     }
 
     private void sendBroadcast(String message, ArrayList<Socket> sucursales){
@@ -94,7 +95,6 @@ public class CentralGui extends Thread {
         int i = 0;
         try {
             for(Socket sucursal : sucursales){
-                DataInputStream in = new DataInputStream(sucursal.getInputStream());
                 DataOutputStream out = new DataOutputStream(sucursal.getOutputStream());
 //                do{
 //                    i++;
