@@ -21,6 +21,7 @@ public class PuenteCentralSurtidor extends Thread {
         this.surtidores = new ArrayList<Socket>();
         this.listeners = new ArrayList<Sucursal>();
         socketCentral = new Socket(HOST, CENTRAL_PORT);
+        System.out.println("Puente iniciado !!");
     }
 
     @Override
