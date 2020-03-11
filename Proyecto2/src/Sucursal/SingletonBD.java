@@ -49,6 +49,7 @@ public class SingletonBD {
                 m[i][0]=id;
                 m[i][1]=combustible;
                 m[i][2]=litros;
+                System.out.println("COMBUSTIBLE"+m[i][1]+" LITROS "+m[i][2]);
                 i++;
             }
             contador=i;
@@ -68,7 +69,6 @@ public class SingletonBD {
     }
 
     public void añadirDato(int id, int tipo, int litros){
-        System.out.println("from sb: AÑADIENDO DATO");
         BD[contador][0]=id;
         BD[contador][1]=tipo;
         BD[contador][2]=litros;
