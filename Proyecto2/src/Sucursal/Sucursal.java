@@ -14,10 +14,12 @@ import java.net.Socket;
 public class Sucursal extends Thread {
     private Socket socketCentral;
     private Socket socketSurtidor;
+    private SingletonBD db;
 
-    public Sucursal(Socket socketCentral, Socket socketSurtidor){
+    public Sucursal(Socket socketCentral, Socket socketSurtidor) throws IOException {
         this.socketCentral = socketCentral;
         this.socketSurtidor = socketSurtidor;
+        db = new SingletonBD();
     }
 
     @Override
@@ -29,12 +31,39 @@ public class Sucursal extends Thread {
             while((!socketSurtidor.isClosed()) && (!socketCentral.isClosed())){
                 message = inSurtidor.readUTF();
                 //TODO: actualizar la base de datos aquí
-                outCentral.writeUTF(message);
+                String [] splitted = message.split("-");
+                if(splitted[0].equals("vtn"))
+                    guardarVenta(splitted);
+
+//                outCentral.writeUTF(message);
 
             }
+            this.db.escribirBD();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void guardarVenta(String[] splitted) {
+        int id = socketSurtidor.getPort();
+        int tipo;
+        switch (splitted[1]){
+            case "93": tipo = 1;
+            break;
+            case "95": tipo = 2;
+            break;
+            case "97": tipo = 3;
+            break;
+            case "diesel": tipo = 4;
+            break;
+            case "kerosene": tipo = 5;
+            break;
+            default: tipo = 5;
+            break;
+        }
+        int litros = Integer.valueOf(splitted[2]);
+
+        this.db.añadirDato(id, tipo, litros);
     }
 
     private Boolean validateMessage(String message){

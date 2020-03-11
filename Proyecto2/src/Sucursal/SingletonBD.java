@@ -21,7 +21,7 @@ public class SingletonBD {
     
     public int[][] BD;
     public int contador;
-    public SingletonBD(int n) throws IOException{
+    public SingletonBD() throws IOException{
         BD= new int[200][3];
         BD=leerBD(BD);
         contador=0;
@@ -46,13 +46,13 @@ public class SingletonBD {
         fr.close();
         return m;
     }
-    public void escribirBD(int[][] m) throws IOException{
-        FileWriter BD= new FileWriter("SucursalBD.txt");
-        PrintWriter pw= new PrintWriter(BD);
-        for(int i=0; i<m.length; i++){
-            pw.println(m[i][0]+" "+m[i][1]+" "+m[i][2]);
+    public void escribirBD() throws IOException{
+        FileWriter fw = new FileWriter("SucursalBD.txt");
+        PrintWriter pw = new PrintWriter(fw);
+        for(int i=0; i<BD.length; i++){
+            pw.println(BD[i][0]+" "+BD[i][1]+" "+BD[i][2]);
         }
-        BD.close();
+        fw.close();
     }
     public void añadirDato(int id, int tipo, int litros){
         BD[contador][0]=id;
@@ -60,25 +60,15 @@ public class SingletonBD {
         BD[contador][2]=litros;
         contador++;
     }
-    public void reportePorLitros(int tipo){
+    public String reportePorLitros(int tipo){
         switch (tipo)
         {
-            case 1: 
-                System.out.println("Se han vendido " + contador(tipo)+" de combustible 93");
-                break;
-            case 2:
-                System.out.println("Se han vendido "+ contador(tipo)+" de combustible 95");
-                break;
-            case 3:
-                System.out.println("Se han vendido "+ contador(tipo)+" de combustible 97");
-                break;
-            case 4:
-                System.out.println("Se han vendido "+ contador(tipo)+" de combustible Diesel");
-                break;
-            case 5:
-                System.out.println("Se han vendido "+ contador(tipo)+" de combustible Kerosene");
-                break;
-              
+            case 1: return "Se han vendido " + contador(tipo)+" de combustible 93";
+            case 2: return "Se han vendido "+ contador(tipo)+" de combustible 95";
+            case 3: return "Se han vendido "+ contador(tipo)+" de combustible 97";
+            case 4: return "Se han vendido "+ contador(tipo)+" de combustible Diesel";
+            case 5: return "Se han vendido "+ contador(tipo)+" de combustible Kerosene";
+            default: return "ERROR";
         }
     }    
     public int contador(int t){

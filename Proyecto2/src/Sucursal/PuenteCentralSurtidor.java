@@ -13,13 +13,15 @@ import java.util.ArrayList;
 public class PuenteCentralSurtidor extends Thread {
     ArrayList<Socket> surtidores;
     ArrayList<Sucursal> listeners;
+    SingletonBD db;
     Socket socketCentral;
-    final String HOST = "34.95.145.17"; // Ip pública de la máquina virtual
+    final String HOST = "35.247.228.145"; // Ip pública de la máquina virtual
     final int CENTRAL_PORT = 80;  // este corresponde al puerto mediante la maquina virtual está escuchando
 
     public PuenteCentralSurtidor() throws IOException {
         this.surtidores = new ArrayList<Socket>();
         this.listeners = new ArrayList<Sucursal>();
+        this.db = new SingletonBD();
         socketCentral = new Socket(HOST, CENTRAL_PORT);
         System.out.println("Puente iniciado !!");
     }
@@ -30,18 +32,30 @@ public class PuenteCentralSurtidor extends Thread {
             DataInputStream inCentral = new DataInputStream(socketCentral.getInputStream());
             DataOutputStream outCentral = new DataOutputStream(socketCentral.getOutputStream());
             String message;
+            String reporte;
             while(!socketCentral.isClosed()){
                 message = inCentral.readUTF();
                 System.out.println("messae readed en admin surtidores: " + message);
-                if(validateMessage(message)){
+
+                if(message.equals("rpt")){
+                    outCentral.writeUTF("~~~ MOSTRANDO REPORTE SUCURSAL X ~~~");
+                    reporte = db.reportePorLitros(1);
+                    outCentral.writeUTF(reporte);
+                    reporte = db.reportePorLitros(2);
+                    outCentral.writeUTF(reporte);
+                    reporte = db.reportePorLitros(3);
+                    outCentral.writeUTF(reporte);
+                    reporte = db.reportePorLitros(4);
+                    outCentral.writeUTF(reporte);
+                    reporte = db.reportePorLitros(5);
+                    outCentral.writeUTF(reporte);
+                }else{
                     //enviar broadcast
                     sendBroadcast(message);
-//                    outCentral.writeUTF("ok");
-                }else{
-                    System.out.println("ERROR! actualizando surtidor !!");
-//                    outCentral.writeUTF("err");
                 }
             }
+
+            db.escribirBD();
 
         } catch (IOException e){
             e.printStackTrace();
@@ -57,7 +71,7 @@ public class PuenteCentralSurtidor extends Thread {
         }
     }
 
-    public Boolean addSurtidor(Socket nuevoSurtidor){
+    public Boolean addSurtidor(Socket nuevoSurtidor) throws IOException {
         if(nuevoSurtidor == null)
             return false;
         Sucursal th = new Sucursal(this.socketCentral, nuevoSurtidor);

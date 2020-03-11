@@ -29,18 +29,40 @@ public class CentralGui extends Thread {
         int option;
         while(true){
             System.out.println("1 - actualizar precio");
-            System.out.println("2 - salir");
+            System.out.println("2 - mostrar reportes");
+            System.out.println("3 - salir");
             System.out.print("Ingrese una opción: ");
             option = scanner.nextInt();
 
             switch (option){
                 case 1: actualizarPrecio(this.sucursales);
                     break;
-                case 2: closeServer(this.server);
+                case 2: mostrarReporte(this.sucursales);
+                    break;
+                case 3: closeServer(this.server);
                     break;
                 default: break;
             }
             if(option == 2) break;
+        }
+    }
+
+    private void mostrarReporte(ArrayList<Socket> sucursales){
+        try {
+            for(Socket sucursal : sucursales){
+                DataInputStream in = new DataInputStream(sucursal.getInputStream());
+                DataOutputStream out = new DataOutputStream((sucursal.getOutputStream()));
+
+                out.writeUTF("rpt");
+                System.out.println(in.readUTF());
+                System.out.println(in.readUTF());
+                System.out.println(in.readUTF());
+                System.out.println(in.readUTF());
+                System.out.println(in.readUTF());
+                System.out.println(in.readUTF());
+            }
+        }catch (IOException e){
+            e.printStackTrace();
         }
     }
 
@@ -71,7 +93,7 @@ public class CentralGui extends Thread {
 
         switch (option){
             case 1: tipoCombustible = "93";
-              
+
                 break;
             case 2: tipoCombustible = "95";
                 break;
@@ -91,23 +113,12 @@ public class CentralGui extends Thread {
     }
 
     private void sendBroadcast(String message, ArrayList<Socket> sucursales){
-        String response;
         int i = 0;
         try {
             for(Socket sucursal : sucursales){
                 DataOutputStream out = new DataOutputStream(sucursal.getOutputStream());
-//                do{
-//                    i++;
-//                    System.out.println("intento #" + i + " - actualizando el surtidor con puerto " + sucursal.getPort());
                 System.out.println("Enviando actualización !");
                 out.writeUTF(message);
-//                    response = in.readUTF();
-//                    System.out.println("->incomming response from sendBroadcast in CentralGui: " + response);
-//                    if(i>= MAX_INTENTOS){
-//                        System.out.println("CentralGui: ERROR ENVIANDO ACTUALIZACIÓN!");
-//                        break;
-//                    }
-//                }while(!response.equals("ok"));
             }
         } catch (IOException e) {
             e.printStackTrace();
