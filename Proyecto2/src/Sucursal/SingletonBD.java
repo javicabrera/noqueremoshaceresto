@@ -23,7 +23,6 @@ public class SingletonBD {
     public SingletonBD(int n) throws IOException{
         BD= new int[200][3];
         BD=leerBD(BD);
-    
     }
     public int[][] leerBD(int[][] m) throws FileNotFoundException, IOException{
         File BD= new File("SucursalBD.txt");
@@ -52,7 +51,7 @@ public class SingletonBD {
         switch (tipo)
         {
             case 1: 
-                System.out.println("Se han vendido "+ contador(tipo)+" de combustible 93");
+                System.out.println("Se han vendido " + contador(tipo)+" de combustible 93");
                 break;
             case 2:
                 System.out.println("Se han vendido "+ contador(tipo)+" de combustible 95");
