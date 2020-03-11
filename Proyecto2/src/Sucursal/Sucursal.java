@@ -28,14 +28,9 @@ public class Sucursal extends Thread {
             String message;
             while((!socketSurtidor.isClosed()) && (!socketCentral.isClosed())){
                 message = inSurtidor.readUTF();
-//                if(validateMessage(message)){
-                    //TODO: actualizar la base de datos aquí
-                    outCentral.writeUTF(message);
-//                    if(inCentral.readUTF().equals("ok"))     outSurtidor.writeUTF("ok");
-//                    else                                     outSurtidor.writeUTF("err");
-//                }else{
-////                    outSurtidor.writeUTF("err");
-//                }
+                //TODO: actualizar la base de datos aquí
+                outCentral.writeUTF(message);
+
             }
         } catch (IOException e) {
             e.printStackTrace();

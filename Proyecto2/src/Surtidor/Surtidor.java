@@ -90,7 +90,7 @@ public class Surtidor {
 
     @Override
     public String toString(){
-        return "Precios this surtidor:\n93: " + this.gasolina93 + "\n95: " + this.gasolina95 +
+        return "Precios este surtidor:\n93: " + this.gasolina93 + "\n95: " + this.gasolina95 +
                 "\n97: " + this.gasolina97 + "\ndiesel: " + this.diesel + "\nkerosene: " + this.kerosene;
     }
 
