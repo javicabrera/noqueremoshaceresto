@@ -11,8 +11,9 @@ import java.io.IOException;
 import java.net.Socket;
 
 /**
+ * Clase que representa el socket de un surtidor
  *
- * @author 56992
+ * @author Matias Escobar, Javiera Cabrera, Yarixa Galvez
  */
 public class Surtidor {
     private int id;
@@ -22,7 +23,8 @@ public class Surtidor {
     private double diesel;
     private double kerosene;
 
-    public Surtidor(int id, double gasolina93, double gasolina95, double gasolina97, double diesel, double kerosene) {
+    public Surtidor(int id, double gasolina93, double gasolina95, 
+            double gasolina97, double diesel, double kerosene) {
         this.id = id;
         this.gasolina93 = gasolina93;
         this.gasolina95 = gasolina95;
@@ -113,7 +115,7 @@ public class Surtidor {
 
             while(true){
                 String message = in.readUTF();
-                System.out.println("-> recibiendo desde el surtidor: " + message);
+                System.out.println("-> recibiendo desde el sucursal: " + message);
 
                 if(message.contains("act")){
                     String [] splitted  = message.split("-");
@@ -121,7 +123,6 @@ public class Surtidor {
                     double nuevoPrecio = Double.valueOf(splitted[2]);
                     actualizarCombustible(tipoCompbustible, nuevoPrecio, surtidor1);
                     System.out.println("nuevos precios: " + surtidor1);
-//                    out.writeUTF("ok");
                 }
                 if(message.equals("end")) break;
             }
@@ -131,7 +132,12 @@ public class Surtidor {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Actualiza el precio de un tipo de combustible .
+     * @param tipoCompbustible
+     * @param nuevoPrecio
+     * @param surtidor 
+     */
     private static void actualizarCombustible(String tipoCompbustible, double nuevoPrecio, Surtidor surtidor) {
         switch (tipoCompbustible){
             case "93":  surtidor.setGasolina93(nuevoPrecio);

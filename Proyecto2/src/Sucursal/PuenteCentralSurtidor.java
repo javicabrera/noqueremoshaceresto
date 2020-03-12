@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 
-// Ésta clase atiende losmensajes provenientes de los surtidores
+// Ésta clase atiende los mensajes provenientes de los surtidores
 // y los gestiona. Además crea un hilo que quda a la escucha de las
 // ventas de los surtidores.
 
@@ -35,7 +35,7 @@ public class PuenteCentralSurtidor extends Thread {
             String reporte;
             while(!socketCentral.isClosed()){
                 message = inCentral.readUTF();
-                System.out.println("messae readed en admin surtidores: " + message);
+                System.out.println("message readed en admin surtidores: " + message);
 
                 if(message.equals("rpt")){
                     outCentral.writeUTF("~~~ MOSTRANDO REPORTE SUCURSAL X ~~~");

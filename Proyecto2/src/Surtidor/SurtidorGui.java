@@ -7,6 +7,11 @@ import java.net.Socket;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Clase que representa el menu e interacción con el usuario de un surtidor
+ * 
+ * @author 56992
+ */
 public class SurtidorGui extends Thread {
 
     private Socket sucursalSocket;
@@ -17,6 +22,15 @@ public class SurtidorGui extends Thread {
     private double kerosene;
     private Boolean disponible;
 
+    /**
+     * Constructor de la interfaz de surtidor
+     * @param sucursalSocket 
+     * @param gasolina93
+     * @param gasolina95
+     * @param gasolina97
+     * @param diesel
+     * @param kerosene 
+     */
     public SurtidorGui(Socket sucursalSocket, double gasolina93, double gasolina95, double gasolina97, double diesel, double kerosene){
         this.sucursalSocket = sucursalSocket;
         this.gasolina93 = gasolina93;
@@ -36,7 +50,8 @@ public class SurtidorGui extends Thread {
         try {
             DataInputStream in = new DataInputStream(sucursalSocket.getInputStream());
             DataOutputStream out = new DataOutputStream(sucursalSocket.getOutputStream());
-
+            //Mientras exista un socket de sucursal abierto se mostrara el menú
+            //para vender combustible
             while(!this.sucursalSocket.isClosed()){
                 System.out.println("~~~ NUEVA VENTA ~~~");
                 System.out.println("1 - bencina 93");

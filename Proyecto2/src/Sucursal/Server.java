@@ -12,8 +12,9 @@ import java.util.ArrayList;
  */
 
 /**
- *
- * @author Javiera Cabrera
+ * Clase que representa el servidor de sucursal, que espera por nuevos clientes
+ * los cuales en este caso son los surtidores.
+ * @author Matias Escobar, Javiera Cabrera, Yarixa Galvez
  */
 public class Server {
 

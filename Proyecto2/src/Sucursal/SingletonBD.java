@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
- *
+ * Representa una base de datos con un txt
  * @author Javiera Cabrera
  */
 public class SingletonBD {

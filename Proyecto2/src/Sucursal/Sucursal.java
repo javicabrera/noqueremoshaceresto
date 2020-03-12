@@ -11,6 +11,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+/**
+ * Clase que representa a un hilo sucursal que escucha las ventas en un surtidor
+ * para guardar los datos realizados
+ * @author Matias escobar, Javiera Cabrera, Yarixa Galvez
+ */
 public class Sucursal extends Thread {
     private Socket socketCentral;
     private Socket socketSurtidor;
@@ -32,7 +37,6 @@ public class Sucursal extends Thread {
                 System.out.println("Recibiendo en sucursal: " + message);
                 String [] splitted = message.split("-");              
                 if(splitted[0].equals("vnt")){
-                    System.out.println("HOLA");
                     guardarVenta(splitted);
                 }
             }
@@ -62,9 +66,5 @@ public class Sucursal extends Thread {
         int litros = Integer.valueOf(splitted[2]);
         System.out.println("Venta "+tipo+"  "+litros);
         this.db.añadirDato(id, tipo, litros);
-    }
-
-    private Boolean validateMessage(String message){
-        return (message!=null);
     }
 }
