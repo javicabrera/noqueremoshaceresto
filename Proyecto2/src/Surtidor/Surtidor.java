@@ -98,8 +98,7 @@ public class Surtidor {
 
 
     public static void main(String[] args) {
-        final String HOST = "192.168.43.159";
-//        final String HOST = "35.247.228.145"; //virtual machine
+        final String HOST = "127.0.0.1"; // ip del equipo que contiene la sucursal;
         final int PORT = 4200;
         DataInputStream in;
         DataOutputStream out;

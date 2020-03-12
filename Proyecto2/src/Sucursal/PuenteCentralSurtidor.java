@@ -15,8 +15,8 @@ public class PuenteCentralSurtidor extends Thread {
     ArrayList<Sucursal> listeners;
     SingletonBD db;
     Socket socketCentral;
-    final String HOST = "35.247.228.145"; // Ip pública de la máquina virtual
-    final int CENTRAL_PORT = 80;  // este corresponde al puerto mediante la maquina virtual está escuchando
+    final String HOST = "127.0.0.1"; // Ip del equipo que contiene la central
+    final int CENTRAL_PORT = 6900;  // este corresponde al puerto mediante la maquina virtual está escuchando
 
     public PuenteCentralSurtidor() throws IOException {
         this.surtidores = new ArrayList<Socket>();

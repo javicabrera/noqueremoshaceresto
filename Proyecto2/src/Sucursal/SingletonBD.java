@@ -7,7 +7,6 @@ package Sucursal;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -33,20 +32,16 @@ public class SingletonBD {
     }
 
     public int[][] leerBD(int[][] m) {
-        System.out.println("----> test !!");
         File BD = null;
         FileReader fr = null;
         BufferedReader br = null;
         try {
-            System.out.println("dentro del try");
-            BD= new File("Sucursal/SucursalBD.txt");
+            BD= new File("src/Sucursal/SucursalBD.txt");
             fr= new FileReader(BD);
             br= new BufferedReader(fr);
             String linea;
             int i=0;
-            System.out.println("antes de while");
             while((linea=br.readLine())!=null){
-                System.out.println("dentro del while");
                 String[] line= linea.split(" ");
                 int id= Integer.valueOf(line[0]);
                 int combustible= Integer.valueOf(line[1]);
@@ -54,7 +49,6 @@ public class SingletonBD {
                 m[i][0]=id;
                 m[i][1]=combustible;
                 m[i][2]=litros;
-                System.out.println("COMBUSTIBLE"+m[i][1]+" LITROS "+m[i][2]);
                 i++;
             }
             contador=i;
