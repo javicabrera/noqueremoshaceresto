@@ -41,10 +41,14 @@ public class Sucursal extends Thread {
             String message;
             while(!socketSurtidor.isClosed()){
                 message = inSurtidor.readUTF();
-                System.out.println("Recibiendo en sucursal: " + message);
-                String [] splitted = message.split("-");              
-                if(splitted[0].equals("vnt")){
-                    guardarVenta(splitted);
+                if(message.equals("testing")){
+                    System.out.println("--> recibiendo prueba de conexión.");
+                }else{
+                    System.out.println("Recibiendo en sucursal: " + message);
+                    String [] splitted = message.split("-");
+                    if(splitted[0].equals("vnt")){
+                        guardarVenta(splitted);
+                    }
                 }
             }
             this.db.escribirBD();

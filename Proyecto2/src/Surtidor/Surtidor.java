@@ -109,7 +109,7 @@ public class Surtidor {
         while(true){
             try {
                 Socket sc = new Socket(HOST, PORT);
-                if(gui!=null || gui.isRunning()) {
+                if(gui!=null) {
                     gui.setSucursalSocket(sc);
                 }else{
                     gui = new SurtidorGui(sc, surtidor1.getGasolina93(), surtidor1.getGasolina95(), surtidor1.getGasolina97(), surtidor1.getDiesel(), surtidor1.getKerosene());

@@ -45,7 +45,7 @@ public class SurtidorGui extends Thread {
         this.out = null;
     }
     public SurtidorGui(double gasolina93, double gasolina95, double gasolina97, double diesel, double kerosene){
-        System.out.println("--> iniciando surtidor en modo autónomo...");
+        System.out.println("--> iniciando Surtidor en modo autónomo...");
         this.sucursalSocket = null;
         this.out = null;
         this.gasolina93 = gasolina93;
@@ -63,17 +63,19 @@ public class SurtidorGui extends Thread {
         int option;
         String tipo;
         String cantidad;
+        String modo = "";
 
-        try {
-            //Mientras exista un socket de sucursal abierto se mostrara el menú
-            //para vender combustible
-            while (this.running) {
+        while (this.running) {
+            try {
                 if(this.sucursalSocket!=null && this.out == null) {
                     this.out = new DataOutputStream(sucursalSocket.getOutputStream());
-                } else{
-                    System.out.println("*** modo autónomo ***");
+                    modo = "";
+                } else if(this.sucursalSocket == null && this.out == null){
+                    modo = " (modo autónomo)";
+                }else{
+                    modo = "";
                 }
-                System.out.println("~~~ NUEVA VENTA ~~~");
+                System.out.println(":::: NUEVA VENTA"+modo+" ::::");
                 System.out.println("1 - bencina 93");
                 System.out.println("2 - bencina 95");
                 System.out.println("3 - bencina 97");
@@ -83,6 +85,7 @@ public class SurtidorGui extends Thread {
                 System.out.print("ingrese una opción: ");
 
                 option = this.running?scanner.nextInt() :-1;
+                testConnection();
 
                 switch (option) {
                     case 1:
@@ -107,25 +110,42 @@ public class SurtidorGui extends Thread {
                 scanner.nextLine();
                 System.out.print("Ingrese cantidad: ");
                 cantidad = this.running?scanner.nextLine():"";
+                testConnection();
 
-                Boolean response = this.running?nuevaVenta("vnt-" + tipo + "-" + cantidad, out):false;
+
+                Boolean response = this.running?nuevaVenta("vnt-" + tipo + "-" + cantidad):false;
+            } catch (IOException e) {
+                System.out.println("--> SurtidorGui: se perdió la conexión con Sucursal.");
+                this.sucursalSocket = null;
+                this.out = null;
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-
         System.out.println("--> terminando proceso gui");
     }
 
-    private Boolean nuevaVenta(String message, DataOutputStream out) throws IOException {
+    private void testConnection(){
+        try {
+            if(this.out != null) {
+                this.out.writeUTF("testing");
+                this.out.writeUTF("testing");
+            }
+        } catch (IOException e) {
+            System.out.println("--> ERROR: se perdió la conexión con Sucursal..\n-->entrando en modo autónomo...");
+            this.sucursalSocket = null;
+            this.out = null;
+        }
+
+    }
+
+    private Boolean nuevaVenta(String message) throws IOException {
         if(this.sucursalSocket!=null && this.out == null) {
             this.out = new DataOutputStream(sucursalSocket.getOutputStream());
         }
         this.disponible = false;
-        if(out != null) {
-            System.out.println("-->SurtidorGui: venta exitosa, enviando venta a Sucursal");
-            out.writeUTF(message);
+        if(this.out != null) {
+            System.out.println("--> SurtidorGui: venta exitosa, enviando venta a Sucursal..");
             // guardar aqui en la base de datos local
+            out.writeUTF(message);
         }else{
             //solo guardar en base de datos local
             System.out.println("--> SurtidorGui: venta guardada solo en base de datos local.");
@@ -149,7 +169,7 @@ public class SurtidorGui extends Thread {
 
     public void setSucursalSocket(Socket sucursalSocket) {
         this.sucursalSocket = sucursalSocket;
-        System.out.println("--> SucursalGui: Saliendo del modo autónomo...");
+        System.out.println("\n--> SucursalGui: Saliendo del modo autónomo...");
     }
 
     public double getGasolina93() {
