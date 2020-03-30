@@ -27,12 +27,19 @@ public class Sucursal extends Thread {
         db = SingletonBD.getInstance();
     }
 
+    public Sucursal(Socket socketSurtidor) throws IOException {
+        System.out.println("-->iniciando Sucursal en modo autónomo");
+        this.socketCentral = null;
+        this.socketSurtidor = socketSurtidor;
+        db = SingletonBD.getInstance();
+    }
+
     @Override
     public void run() {
         try {
             DataInputStream inSurtidor = new DataInputStream(socketSurtidor.getInputStream());
             String message;
-            while((!socketSurtidor.isClosed()) && (!socketCentral.isClosed())){
+            while(!socketSurtidor.isClosed()){
                 message = inSurtidor.readUTF();
                 System.out.println("Recibiendo en sucursal: " + message);
                 String [] splitted = message.split("-");              
@@ -47,6 +54,9 @@ public class Sucursal extends Thread {
     }
 
     private void guardarVenta(String[] splitted) {
+        // if el socket de la central es null, guardar solo en la db local pero con un atributo bandera (para más tarde actualizar)
+        // else guardar en db local y mandar la venta a central
+
         int id = socketSurtidor.getPort();
         int tipo;
         switch (splitted[1]){

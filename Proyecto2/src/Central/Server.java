@@ -16,6 +16,8 @@ import java.util.ArrayList;
  */
 public class Server {
     public static void main(String[] args) {
+        //entonces falta almacenar los threads, los cuales estan escuchando
+
         ArrayList<SucursalListener> listeners = new ArrayList<>();
         SucursalListener thread = null;
         ServerSocket server = null;

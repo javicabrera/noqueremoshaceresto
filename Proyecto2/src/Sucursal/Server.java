@@ -20,7 +20,7 @@ public class Server {
 
     public static void main(String[] args) throws IOException {
         final int PORT = 4200;
-        ArrayList<Socket> surtidores = new ArrayList<Socket>();
+//        ArrayList<Socket> surtidores = new ArrayList<Socket>();
         ServerSocket server = null;
         Socket sc = null;
         PuenteCentralSurtidor admin;
@@ -36,9 +36,9 @@ public class Server {
                 if((sc = server.accept()) == null) break;  // esta sentencia hace que el programa espere por un nuevo cliente (surtidor)
                 System.out.println("surtidor conectado");
                 admin.addSurtidor(sc);
-                surtidores.add(sc);
+//                surtidores.add(sc);
             }
-            sc.close();
+//            sc.close();
             System.out.println("...saliendo !");
         }catch (IOException e){
             e.printStackTrace();

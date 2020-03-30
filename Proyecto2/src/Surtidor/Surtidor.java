@@ -9,6 +9,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Clase que representa el socket de un surtidor
@@ -23,8 +24,8 @@ public class Surtidor {
     private double diesel;
     private double kerosene;
 
-    public Surtidor(int id, double gasolina93, double gasolina95, 
-            double gasolina97, double diesel, double kerosene) {
+    public Surtidor(int id, double gasolina93, double gasolina95,
+                    double gasolina97, double diesel, double kerosene) {
         this.id = id;
         this.gasolina93 = gasolina93;
         this.gasolina95 = gasolina95;
@@ -102,40 +103,68 @@ public class Surtidor {
         final int PORT = 4200;
         DataInputStream in;
         DataOutputStream out;
+        SurtidorGui gui = null;
         Surtidor surtidor1 = new Surtidor(1,100,100,100,100,100);
         // el surtidor debería inicializarse con la info que le llega como respuesa desde la central con los precios de los combustibles
-        try {
-            Socket sc = new Socket(HOST, PORT);
-            SurtidorGui sg = new SurtidorGui(sc, surtidor1.getGasolina93(), surtidor1.getGasolina95(), surtidor1.getGasolina97(), surtidor1.getDiesel(), surtidor1.getKerosene());
-            sg.start();
-
-            in = new DataInputStream(sc.getInputStream());
-            out = new DataOutputStream(sc.getOutputStream());
-
-            while(true){
-                String message = in.readUTF();
-                System.out.println("-> recibiendo desde el sucursal: " + message);
-
-                if(message.contains("act")){
-                    String [] splitted  = message.split("-");
-                    String tipoCompbustible = splitted[1];
-                    double nuevoPrecio = Double.valueOf(splitted[2]);
-                    actualizarCombustible(tipoCompbustible, nuevoPrecio, surtidor1);
-                    System.out.println("nuevos precios: " + surtidor1);
+        while(true){
+            try {
+                Socket sc = new Socket(HOST, PORT);
+                if(gui!=null || gui.isRunning()) {
+                    gui.setSucursalSocket(sc);
+                }else{
+                    gui = new SurtidorGui(sc, surtidor1.getGasolina93(), surtidor1.getGasolina95(), surtidor1.getGasolina97(), surtidor1.getDiesel(), surtidor1.getKerosene());
+                    gui.start();
                 }
-                if(message.equals("end")) break;
-            }
-            sc.close();
 
-        } catch (IOException e) {
-            e.printStackTrace();
+
+                in = new DataInputStream(sc.getInputStream());
+                //            out = new DataOutputStream(sc.getOutputStream());
+
+                while(!sc.isClosed()){
+                    String message = in.readUTF();
+                    System.out.println("-> recibiendo desde el sucursal: " + message);
+
+                    if(message.contains("act")){
+                        String [] splitted  = message.split("-");
+                        String tipoCompbustible = splitted[1];
+                        double nuevoPrecio = Double.valueOf(splitted[2]);
+                        actualizarCombustible(tipoCompbustible, nuevoPrecio, surtidor1);
+                        System.out.println("nuevos precios: " + surtidor1);
+                    }
+                    if(message.equals("end")) break;
+                }
+            } catch (IllegalMonitorStateException e){
+                System.out.println("ERORR");
+                //                e.printStackTrace();
+                freeze(3);
+            }catch (IOException e){
+                // entonces, cada vez que el servidor se desconecte, se hará
+                // una pausa de cinco segundos y volverá a intentar la conexión con el servidor
+                if(gui == null){
+                    gui = new SurtidorGui(surtidor1.getGasolina93(), surtidor1.getGasolina95(), surtidor1.getGasolina97(), surtidor1.getDiesel(), surtidor1.getKerosene());
+                    gui.start();
+                }
+                freeze(3);
+            }
+        }
+
+    }
+
+
+    private static void freeze(long seconds){
+        try {
+            TimeUnit.SECONDS.sleep(seconds);
+        } catch (InterruptedException ex) {
+            System.out.println("-> interruption error");
+            ex.printStackTrace();
         }
     }
+
     /**
      * Actualiza el precio de un tipo de combustible .
      * @param tipoCompbustible
      * @param nuevoPrecio
-     * @param surtidor 
+     * @param surtidor
      */
     private static void actualizarCombustible(String tipoCompbustible, double nuevoPrecio, Surtidor surtidor) {
         switch (tipoCompbustible){

@@ -48,14 +48,16 @@ public class CentralGui extends Thread {
     }
 
     private void solicitarReporte(ArrayList<Socket> sucursales){
-        try {
-            for(Socket sucursal : sucursales){
-                DataOutputStream out = new DataOutputStream((sucursal.getOutputStream()));
-                out.writeUTF("rpt");
-            }
-        }catch (IOException e){
-            e.printStackTrace();
-        }
+        //ahora se tendrán que pedir los reportes a la base de datos !!
+
+//        try {
+//            for(Socket sucursal : sucursales){
+//                DataOutputStream out = new DataOutputStream((sucursal.getOutputStream()));
+//                out.writeUTF("rpt");
+//            }
+//        }catch (IOException e){
+//            e.printStackTrace();
+//        }
     }
 
     private void closeServer(ServerSocket server){
