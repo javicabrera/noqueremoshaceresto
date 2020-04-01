@@ -23,8 +23,7 @@ public class BDsucursal {
      * @param args the command line arguments
      */
     BDsucursal() {
-        BDsucursal bd= new BDsucursal();
-        bd.conectar();
+        conectar();
     }
     
     public void conectar(){
