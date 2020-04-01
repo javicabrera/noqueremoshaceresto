@@ -49,7 +49,6 @@ public class CentralGui extends Thread {
 
     private void solicitarReporte(ArrayList<Socket> sucursales){
         //ahora se tendrán que pedir los reportes a la base de datos !!
-
 //        try {
 //            for(Socket sucursal : sucursales){
 //                DataOutputStream out = new DataOutputStream((sucursal.getOutputStream()));
@@ -83,6 +82,7 @@ public class CentralGui extends Thread {
         System.out.println("4 - diesel");
         System.out.println("5 - kerosene");
         System.out.print("ingrese una opción: ");
+
         option = scanner.nextInt();
 
         switch (option){
