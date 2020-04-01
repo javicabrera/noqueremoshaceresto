@@ -6,6 +6,8 @@
 
 package Sucursal;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 /**
@@ -20,7 +22,7 @@ public class BDsucursal {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    BDsucursal() {
         BDsucursal bd= new BDsucursal();
         bd.conectar();
     }
@@ -34,12 +36,12 @@ public class BDsucursal {
             System.out.println("No se conectó");
         }
     }
-    public void instertarVenta(Connection c, int litros, int id, int idSurtidor,  String tipo){
-        
+    public void instertarVenta(Connection c, int litros, int id, int idSurtidor,  String tipo, Boolean enviado){
+        String env = enviado?"t":"f";
         try {
             Statement s= c.createStatement();
-            s.executeUpdate("INSERT INTO transcaccion VALUES ("+ litros + "," + id + ","
-                    + idSurtidor+",'"+ tipo+"');");
+            s.executeUpdate("INSERT INTO transcaccion VALUES (" + litros + "," + id + ","
+                    + idSurtidor + ",'" + tipo + "','" + enviado + "');");
             c.close();
         } catch (SQLException ex) {
             Logger.getLogger(BDsucursal.class.getName()).log(Level.SEVERE, null, ex);
@@ -57,6 +59,7 @@ public class BDsucursal {
             Logger.getLogger(BDsucursal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     public void getCargas(Connection c){
         int cargas=0;
         String consulta= "SELECT count(*) FROM ventas";
@@ -71,6 +74,27 @@ public class BDsucursal {
         } catch (SQLException ex) {
             Logger.getLogger(BDsucursal.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+    }
+
+    public String[] getRezagados(Connection c){
+        ArrayList<String> rezagados = new ArrayList<String>();
+
+        int cargas=0;
+        String consulta= "SELECT * FROM transaccion WHERE enviado='f';";
+        try {
+            PreparedStatement ps = c.prepareStatement(consulta);
+            ResultSet rs= ps.executeQuery();
+
+            while(rs.next()){
+                String litros = rs.getString("litros");
+                String tipo = rs.getString("tipo");
+                String mensaje = "vnt" + tipo + litros;
+                rezagados.add(mensaje);
+            }
+            c.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(BDsucursal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return (String[])rezagados.toArray();
     }
 }

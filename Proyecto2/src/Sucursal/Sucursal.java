@@ -19,19 +19,19 @@ import java.net.Socket;
 public class Sucursal extends Thread {
     private Socket socketCentral;
     private Socket socketSurtidor;
-    private SingletonBD db;
+    private BDsucursal db;
 
     public Sucursal(Socket socketCentral, Socket socketSurtidor) throws IOException {
         this.socketCentral = socketCentral;
         this.socketSurtidor = socketSurtidor;
-        db = SingletonBD.getInstance();
+        db = new BDsucursal();
     }
 
     public Sucursal(Socket socketSurtidor) throws IOException {
         System.out.println("-->iniciando Sucursal en modo autónomo");
         this.socketCentral = null;
         this.socketSurtidor = socketSurtidor;
-        db = SingletonBD.getInstance();
+        db = new BDsucursal();
     }
 
     @Override
@@ -54,7 +54,7 @@ public class Sucursal extends Thread {
                     }
                 }
             }
-            this.db.escribirBD();
+//            this.db.escribirBD();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -77,9 +77,10 @@ public class Sucursal extends Thread {
     private void enviarRezagados(){
         Boolean response = false;
         // ejecutar consulta para rescatar las ventas no enviadas
-        // rezagados[] = getRezagados();
-        // if(rezagados.lenght == 0) return;
-        // for(Vendta rezagada : rezagados) envíarACentral(rezagada.toString());
+         String rezagados[] = this.db.getRezagados(this.db.conexion);
+         if(rezagados.length == 0) return;
+         for(String rezagada : rezagados)
+             enviarACentral(rezagada);
     }
 
     private void guardarVenta(String[] splitted, Boolean enviadoACentral) {
@@ -103,7 +104,8 @@ public class Sucursal extends Thread {
             break;
         }
         int litros = Integer.valueOf(splitted[2]);
+        this.db.instertarVenta(this.db.conexion, litros, 69, 69, splitted[1], enviadoACentral);
         System.out.println("Venta "+tipo+"  "+litros);
-        this.db.añadirDato(id, tipo, litros);
+//        this.db.añadirDato(id, tipo, litros);
     }
 }

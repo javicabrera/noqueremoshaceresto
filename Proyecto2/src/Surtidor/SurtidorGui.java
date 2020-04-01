@@ -112,7 +112,6 @@ public class SurtidorGui extends Thread {
                 cantidad = this.running?scanner.nextLine():"";
                 testConnection();
 
-
                 Boolean response = this.running?nuevaVenta("vnt-" + tipo + "-" + cantidad):false;
             } catch (IOException e) {
                 System.out.println("--> SurtidorGui: se perdió la conexión con Sucursal.");
