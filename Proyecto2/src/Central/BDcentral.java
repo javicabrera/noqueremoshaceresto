@@ -34,32 +34,22 @@ public class BDcentral {
             System.out.println("No se conectó");
         }
     }
-    public void instertarVenta(Connection c, int litros, int id, int idSurtidor,  String tipo){
+    public void instertarVenta(Connection c, int litros, int id,int idsucursal, int idsurtidor,int idSurtidor,  String tipo, boolean enviado){
         
         try {
             Statement s= c.createStatement();
-            s.executeUpdate("INSERT INTO Ventas VALUES ("+ litros + "," + id + ","
-                    + idSurtidor+",'"+ tipo+"');");
+            s.executeUpdate("INSERT INTO reporte (idventa,idsucursal,idsurtidor,litros,tipo,enviado)"
+                    + " VALUES ("+ id + "," + idsucursal + ","+idsurtidor +"," + litros + ","
+                    + tipo+",'"+ enviado+"');");
             c.close();
         } catch (SQLException ex) {
             Logger.getLogger(BDcentral.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public void modificarPrecio(Connection c, int id, int idSucursal,int p93, int p95, int p97, int pDiesel, int pKer){
-        try {
-            Statement s= c.createStatement();
-            s.executeUpdate("UPDATE surtidor SET precio93="+p93+ ","
-                    + "preci95="+ p95 + ", precio97="+ p97+","
-                    + "precioKerosene="+ pKer+", precioDiesel="+pDiesel+""
-                    + " WHERE id="+ id+" AND id_sucursal="+idSucursal);
-            c.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(BDcentral.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+
     public void getCargas(Connection c){
         int cargas=0;
-        String consulta= "SELECT count(*) FROM ventas";
+        String consulta= "SELECT count(*) FROM reporte";
         try {
             Statement s=c.createStatement();
             PreparedStatement ps=c.prepareStatement(consulta);
@@ -67,7 +57,6 @@ public class BDcentral {
             while(rs.next()){
                 cargas=rs.getInt("count");
             }
-            c.close();
         } catch (SQLException ex) {
             Logger.getLogger(BDcentral.class.getName()).log(Level.SEVERE, null, ex);
         }
