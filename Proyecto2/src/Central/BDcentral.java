@@ -18,25 +18,21 @@ public class BDcentral {
     String pass= "199230662";
     String user= "postgres";
     String baseDatos="jdbc:postgresql://localhost:5432/BDCentral";
-    /**
-     * @param args the command line arguments
-     */
-        BDcentral() {
-        BDcentral bd= new BDcentral();
-        bd.conectar();
-    }
-    
+
+
+    BDcentral() { conectar(); }
+
     public void conectar(){
         try{
-        conexion= DriverManager.getConnection(baseDatos, user, pass);
-        System.out.println("CONECTADO");
+            conexion= DriverManager.getConnection(baseDatos, user, pass);
+            System.out.println("CONECTADO");
         }catch(SQLException ex){
             ex.printStackTrace();
             System.out.println("No se conectó");
         }
     }
     public void instertarVenta(Connection c, int litros, int id,int idsucursal, int idsurtidor,  String tipo, boolean enviado){
-        
+
         try {
             Statement s= c.createStatement();
             s.executeUpdate("INSERT INTO reporte (idventa,idsucursal,idsurtidor,litros,tipo,enviado)"
