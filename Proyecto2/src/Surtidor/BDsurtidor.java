@@ -21,8 +21,7 @@ public class BDsurtidor {
      * @param args the command line arguments
      */
     public BDsurtidor(){
-        BDsurtidor bd= new BDsurtidor();
-        bd.conectar();
+        conectar();
     }
     
     public void conectar(){

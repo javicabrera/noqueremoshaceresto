@@ -91,20 +91,21 @@ public class Surtidor {
         final int PORT = 4200;
         DataInputStream in;
         DataOutputStream out;
-        SurtidorGui gui = null;
-        BDsurtidor bd=gui.getBD();
+        SurtidorGui gui = null;        
         Surtidor surtidor1 = new Surtidor(1,100,100,100,100,100);
+        
         // el surtidor debería inicializarse con la info que le llega como respuesa desde la central con los precios de los combustibles
         while(true){
             try {
                 Socket sc = new Socket(HOST, PORT);
                 if(gui!=null) {
                     gui.setSucursalSocket(sc);
+                    
                 }else{
                     gui = new SurtidorGui(sc);
                     gui.start();
                 }
-
+                BDsurtidor bd=gui.getBD();
                 in = new DataInputStream(sc.getInputStream());
                 //            out = new DataOutputStream(sc.getOutputStream());
 
