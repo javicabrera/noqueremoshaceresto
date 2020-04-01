@@ -46,9 +46,7 @@ public class BD {
                     + "( "+p93+","+p95+","+p97+","+pDiesel+","+pKer+","+idSucursal+");");
         } catch (SQLException ex) {
             Logger.getLogger(BD.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    
-    
+        }        
     }
     public void instertarVenta(Connection c, int litros, int id, int idSurtidor,  String tipo){
         

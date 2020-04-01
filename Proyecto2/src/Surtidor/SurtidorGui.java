@@ -15,14 +15,9 @@ import java.util.concurrent.TimeUnit;
 public class SurtidorGui extends Thread {
 
     private Socket sucursalSocket;
-    private double gasolina93;
-    private double gasolina95;
-    private double gasolina97;
-    private double diesel;
-    private double kerosene;
-    private Boolean disponible;
     private Boolean running;
     private DataOutputStream out;
+    private BDsurtidor basedatos;
 
     /**
      * Constructor de la interfaz de surtidor
@@ -33,28 +28,18 @@ public class SurtidorGui extends Thread {
      * @param diesel
      * @param kerosene
      */
-    public SurtidorGui(Socket sucursalSocket, double gasolina93, double gasolina95, double gasolina97, double diesel, double kerosene){
+    public SurtidorGui(Socket sucursalSocket){
         this.sucursalSocket = sucursalSocket;
-        this.gasolina93 = gasolina93;
-        this.gasolina95 = gasolina95;
-        this.gasolina97 = gasolina97;
-        this.diesel = diesel;
-        this.kerosene = kerosene;
-        this.disponible = true;
         this.running = true;
         this.out = null;
+        this.basedatos=new BDsurtidor();
     }
-    public SurtidorGui(double gasolina93, double gasolina95, double gasolina97, double diesel, double kerosene){
+    public SurtidorGui(){
         System.out.println("--> iniciando Surtidor en modo autónomo...");
         this.sucursalSocket = null;
         this.out = null;
-        this.gasolina93 = gasolina93;
-        this.gasolina95 = gasolina95;
-        this.gasolina97 = gasolina97;
-        this.diesel = diesel;
-        this.kerosene = kerosene;
-        this.disponible = true;
         this.running = true;
+        this.basedatos=new BDsurtidor();
     }
 
     @Override
@@ -113,7 +98,7 @@ public class SurtidorGui extends Thread {
                 testConnection();
 
 
-                Boolean response = this.running?nuevaVenta("vnt-" + tipo + "-" + cantidad):false;
+                Boolean response = this.running?nuevaVenta("vnt-" + tipo + "-" + cantidad,tipo,Integer.parseInt(cantidad)):false;
             } catch (IOException e) {
                 System.out.println("--> SurtidorGui: se perdió la conexión con Sucursal.");
                 this.sucursalSocket = null;
@@ -137,17 +122,18 @@ public class SurtidorGui extends Thread {
 
     }
 
-    private Boolean nuevaVenta(String message) throws IOException {
+    private Boolean nuevaVenta(String message, String tipo, int cantidad) throws IOException {
         if(this.sucursalSocket!=null && this.out == null) {
             this.out = new DataOutputStream(sucursalSocket.getOutputStream());
         }
-        this.disponible = false;
         if(this.out != null) {
             System.out.println("--> SurtidorGui: venta exitosa, enviando venta a Sucursal..");
-            // guardar aqui en la base de datos local
+            basedatos.instertarVenta(basedatos.conexion, cantidad, 1, 1, tipo,true);
             out.writeUTF(message);
         }else{
+            basedatos.instertarVenta(basedatos.conexion, cantidad, 1, 1, tipo,false);
             //solo guardar en base de datos local
+            
             System.out.println("--> SurtidorGui: venta guardada solo en base de datos local.");
         }
         return true;
@@ -171,44 +157,7 @@ public class SurtidorGui extends Thread {
         this.sucursalSocket = sucursalSocket;
         System.out.println("\n--> SucursalGui: Saliendo del modo autónomo...");
     }
-
-    public double getGasolina93() {
-        return gasolina93;
-    }
-
-    public void setGasolina93(double gasolina93) {
-        this.gasolina93 = gasolina93;
-    }
-
-    public double getGasolina95() {
-        return gasolina95;
-    }
-
-    public void setGasolina95(double gasolina95) {
-        this.gasolina95 = gasolina95;
-    }
-
-    public double getGasolina97() {
-        return gasolina97;
-    }
-
-    public void setGasolina97(double gasolina97) {
-        this.gasolina97 = gasolina97;
-    }
-
-    public double getDiesel() {
-        return diesel;
-    }
-
-    public void setDiesel(double diesel) {
-        this.diesel = diesel;
-    }
-
-    public double getKerosene() {
-        return kerosene;
-    }
-
-    public void setKerosene(double kerosene) {
-        this.kerosene = kerosene;
+    public BDsurtidor getBD(){
+        return basedatos;    
     }
 }

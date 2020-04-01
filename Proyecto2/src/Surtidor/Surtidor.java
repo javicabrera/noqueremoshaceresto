@@ -9,6 +9,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.sql.SQLException;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -18,14 +19,13 @@ import java.util.concurrent.TimeUnit;
  */
 public class Surtidor {
     private int id;
-    private double gasolina93;
-    private double gasolina95;
-    private double gasolina97;
-    private double diesel;
-    private double kerosene;
+    private int gasolina93;
+    private int gasolina95;
+    private int gasolina97;
+    private int diesel;
+    private int kerosene;
 
-    public Surtidor(int id, double gasolina93, double gasolina95,
-                    double gasolina97, double diesel, double kerosene) {
+    public Surtidor(int id, int gasolina93, int gasolina95, int gasolina97, int diesel, int kerosene) {
         this.id = id;
         this.gasolina93 = gasolina93;
         this.gasolina95 = gasolina95;
@@ -43,52 +43,40 @@ public class Surtidor {
         this.kerosene = 100;
     }
 
-    public double getGasolina93() {
+    public int getGasolina93() {
         return gasolina93;
     }
 
-    public void setGasolina93(double gasolina93) {
+    public void setGasolina93(int gasolina93) {
         this.gasolina93 = gasolina93;
     }
 
-    public double getGasolina95() {
+    public int getGasolina95() {
         return gasolina95;
     }
 
-    public void setGasolina95(double gasolina95) {
+    public void setGasolina95(int gasolina95) {
         this.gasolina95 = gasolina95;
     }
 
-    public double getGasolina97() {
+    public int getGasolina97() {
         return gasolina97;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setGasolina97(double gasolina97) {
+    public void setGasolina97(int gasolina97) {
         this.gasolina97 = gasolina97;
     }
 
-    public double getDiesel() {
+    public int getDiesel() {
         return diesel;
     }
 
-    public void setDiesel(double diesel) {
+    public void setDiesel(int diesel) {
         this.diesel = diesel;
     }
 
-    public double getKerosene() {
-        return kerosene;
-    }
-
-    public void setKerosene(double kerosene) {
-        this.kerosene = kerosene;
+    public void setKerosene(int kerosene){
+        this.kerosene=kerosene;
     }
 
     @Override
@@ -98,12 +86,13 @@ public class Surtidor {
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         final String HOST = "127.0.0.1"; // ip del equipo que contiene la sucursal;
         final int PORT = 4200;
         DataInputStream in;
         DataOutputStream out;
         SurtidorGui gui = null;
+        BDsurtidor bd=gui.getBD();
         Surtidor surtidor1 = new Surtidor(1,100,100,100,100,100);
         // el surtidor debería inicializarse con la info que le llega como respuesa desde la central con los precios de los combustibles
         while(true){
@@ -112,7 +101,7 @@ public class Surtidor {
                 if(gui!=null) {
                     gui.setSucursalSocket(sc);
                 }else{
-                    gui = new SurtidorGui(sc, surtidor1.getGasolina93(), surtidor1.getGasolina95(), surtidor1.getGasolina97(), surtidor1.getDiesel(), surtidor1.getKerosene());
+                    gui = new SurtidorGui(sc);
                     gui.start();
                 }
 
@@ -127,8 +116,8 @@ public class Surtidor {
                     if(message.contains("act")){
                         String [] splitted  = message.split("-");
                         String tipoCompbustible = splitted[1];
-                        double nuevoPrecio = Double.valueOf(splitted[2]);
-                        actualizarCombustible(tipoCompbustible, nuevoPrecio, surtidor1);
+                        int nuevoPrecio = Integer.valueOf(splitted[2]);
+                        actualizarCombustible(bd,tipoCompbustible, nuevoPrecio, surtidor1);
                         System.out.println("nuevos precios: " + surtidor1);
                     }
                     if(message.equals("end")) break;
@@ -141,13 +130,12 @@ public class Surtidor {
                 // entonces, cada vez que el servidor se desconecte, se hará
                 // una pausa de cinco segundos y volverá a intentar la conexión con el servidor
                 if(gui == null){
-                    gui = new SurtidorGui(surtidor1.getGasolina93(), surtidor1.getGasolina95(), surtidor1.getGasolina97(), surtidor1.getDiesel(), surtidor1.getKerosene());
+                    gui = new SurtidorGui();
                     gui.start();
                 }
                 freeze(3);
             }
         }
-
     }
 
 
@@ -166,9 +154,11 @@ public class Surtidor {
      * @param nuevoPrecio
      * @param surtidor
      */
-    private static void actualizarCombustible(String tipoCompbustible, double nuevoPrecio, Surtidor surtidor) {
+    private static void actualizarCombustible(BDsurtidor bd,String tipoCompbustible, int nuevoPrecio,Surtidor surtidor) throws SQLException {
+        bd.modificarPrecio(bd.conexion, surtidor.id, 1, tipoCompbustible, nuevoPrecio);
         switch (tipoCompbustible){
-            case "93":  surtidor.setGasolina93(nuevoPrecio);
+            case "93":  
+                surtidor.setGasolina93(nuevoPrecio);                 
                 break;
             case "95": surtidor.setGasolina95(nuevoPrecio);
                 break;
@@ -181,7 +171,6 @@ public class Surtidor {
             default: break;
         }
     }
-
 }
 
 
