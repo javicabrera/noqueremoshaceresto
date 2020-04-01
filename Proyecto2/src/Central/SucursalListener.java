@@ -7,7 +7,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 
-// Esta clase debería emitir ls reportes??
+// Esta clase escucha por actualizaciones proveninentes de la base de datos
 
 
 public class SucursalListener extends Thread {
@@ -25,7 +25,9 @@ public class SucursalListener extends Thread {
 
             while(!this.sucursalSocket.isClosed()){
                 message = in.readUTF();
-                System.out.println(message);
+                System.out.println("-->insertando en base de datos: " + message);
+
+                // aquí va la inserción a la base de datos
             }
         }catch(IOException e){
             e.printStackTrace();

@@ -116,7 +116,6 @@ public class Surtidor {
                     gui.start();
                 }
 
-
                 in = new DataInputStream(sc.getInputStream());
                 //            out = new DataOutputStream(sc.getOutputStream());
 
@@ -149,7 +148,6 @@ public class Surtidor {
         }
 
     }
-
 
     private static void freeze(long seconds){
         try {
