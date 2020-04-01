@@ -40,6 +40,7 @@ public class PuenteCentralSurtidor extends Thread {
 
                 DataInputStream inCentral = new DataInputStream(socketCentral.getInputStream());
 //                DataOutputStream outCentral = new DataOutputStream(socketCentral.getOutputStream());
+
                 String message;
                 String reporte;
 
