@@ -133,7 +133,6 @@ public class SurtidorGui extends Thread {
         }else{
             basedatos.instertarVenta(basedatos.conexion, cantidad, 1, 1, tipo,false);
             //solo guardar en base de datos local
-
             System.out.println("--> SurtidorGui: venta guardada solo en base de datos local.");
         }
         return true;

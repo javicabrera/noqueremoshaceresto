@@ -105,7 +105,7 @@ public class Sucursal extends Thread {
         }
         int litros = Integer.valueOf(splitted[2]);
         this.db.instertarVenta(this.db.conexion, litros, 69, 69, splitted[1], enviadoACentral);
-        System.out.println("Venta "+tipo+"  "+litros);
+        System.out.println("Venta " + tipo + "  " + litros);
 //        this.db.añadirDato(id, tipo, litros);
     }
 }

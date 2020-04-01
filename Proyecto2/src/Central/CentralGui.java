@@ -1,5 +1,7 @@
 package Central;
 
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -16,12 +18,14 @@ public class CentralGui extends Thread {
     private ArrayList<Socket> sucursales;
     private ServerSocket server;
     private Scanner scanner;
-    final int MAX_INTENTOS = 50;
+    private final int MAX_INTENTOS = 50;
+    private BDcentral db;
 
     public CentralGui(ServerSocket server){
         this.server = server;
         this.sucursales = new ArrayList<>();
         this.scanner = new Scanner(System.in);
+        this.db = new BDcentral();
     }
 
     @Override
@@ -49,14 +53,41 @@ public class CentralGui extends Thread {
 
     private void solicitarReporte(ArrayList<Socket> sucursales){
         //ahora se tendrán que pedir los reportes a la base de datos !!
-//        try {
-//            for(Socket sucursal : sucursales){
-//                DataOutputStream out = new DataOutputStream((sucursal.getOutputStream()));
-//                out.writeUTF("rpt");
-//            }
-//        }catch (IOException e){
-//            e.printStackTrace();
-//        }
+        int cantCargas93 = db.getCantidadDeCargas(this.db.conexion, "93");
+        int cantCargas95 = db.getCantidadDeCargas(this.db.conexion, "95");
+        int cantCargas97 = db.getCantidadDeCargas(this.db.conexion, "97");
+        int cantCargasDiesel = db.getCantidadDeCargas(this.db.conexion, "diesel");
+        int cantCargasKerosene = db.getCantidadDeCargas(this.db.conexion, "kerosene");
+
+        double cantLitros93 = db.getLitrosConsumidos(this.db.conexion, "93");
+        double cantLitros95 = db.getLitrosConsumidos(this.db.conexion, "95");
+        double cantLitros97 = db.getLitrosConsumidos(this.db.conexion, "97");
+        double cantLitrosDiesel = db.getLitrosConsumidos(this.db.conexion, "diesel");
+        double cantLitrosKerosene = db.getLitrosConsumidos(this.db.conexion, "kerosene");
+
+        System.out.println(":::::REPORTE:::::");
+        System.out.println("->BENCINA 93:");
+        System.out.println("--->CANTIDAD DE VENTAS: " + cantCargas93);
+        System.out.println("--->CANTIDAD TOTAL DE LITROS VENDIDOS: " + cantLitros93);
+
+        System.out.println("->BENCINA 95:");
+        System.out.println("--->CANTIDAD DE VENTAS: " + cantCargas95);
+        System.out.println("--->CANTIDAD TOTAL DE LITROS VENDIDOS: " + cantLitros95);
+
+        System.out.println("->BENCINA 97:");
+        System.out.println("--->CANTIDAD DE VENTAS: " + cantCargas97);
+        System.out.println("--->CANTIDAD TOTAL DE LITROS VENDIDOS: " + cantLitros97);
+
+        System.out.println("->DIESEL:");
+        System.out.println("--->CANTIDAD DE VENTAS: " + cantCargasDiesel);
+        System.out.println("--->CANTIDAD TOTAL DE LITROS VENDIDOS: " + cantLitrosDiesel);
+
+        System.out.println("->KEROSENE:");
+        System.out.println("--->CANTIDAD DE VENTAS: " + cantCargasKerosene);
+        System.out.println("--->CANTIDAD TOTAL DE LITROS VENDIDOS: " + cantLitrosKerosene);
+
+        System.out.println(":::::FIN REPORTE:::::");
+
     }
 
     private void closeServer(ServerSocket server){

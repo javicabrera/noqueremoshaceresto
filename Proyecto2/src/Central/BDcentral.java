@@ -12,6 +12,7 @@ import java.util.logging.Logger;
  *
  * @author Javiera
  */
+
 public class BDcentral {
     Connection conexion= null;
     String pass= "199230662";
@@ -20,7 +21,7 @@ public class BDcentral {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+        BDcentral() {
         BDcentral bd= new BDcentral();
         bd.conectar();
     }
@@ -34,7 +35,7 @@ public class BDcentral {
             System.out.println("No se conectó");
         }
     }
-    public void instertarVenta(Connection c, int litros, int id,int idsucursal, int idsurtidor,int idSurtidor,  String tipo, boolean enviado){
+    public void instertarVenta(Connection c, int litros, int id,int idsucursal, int idsurtidor,  String tipo, boolean enviado){
         
         try {
             Statement s= c.createStatement();
@@ -60,6 +61,45 @@ public class BDcentral {
         } catch (SQLException ex) {
             Logger.getLogger(BDcentral.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+    }
+
+    public int getCantidadDeCargas(Connection c, String tipo){
+        int resultado=-1;
+        String query = "SELECT count(*) FROM transaccion WHERE tipo='" + tipo +"';";
+        Statement s;
+        try {
+            s = c.createStatement();
+            PreparedStatement ps = c.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                resultado = rs.getInt("count");
+            }
+            c.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        return resultado;
+    }
+
+    public float getLitrosConsumidos(Connection c, String tipo){
+        float resultado=-1;
+        String query = "SELECT sum(litros) FROM transaccion WHERE tipo='" + tipo +"';";
+        Statement s;
+        try {
+            s = c.createStatement();
+            PreparedStatement ps = c.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                resultado = rs.getFloat("sum");
+            }
+            c.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        return resultado;
     }
 }
