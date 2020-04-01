@@ -19,19 +19,19 @@ import java.net.Socket;
 public class Sucursal extends Thread {
     private Socket socketCentral;
     private Socket socketSurtidor;
-    private SingletonBD db;
+    private BDsucursal db;
 
     public Sucursal(Socket socketCentral, Socket socketSurtidor) throws IOException {
         this.socketCentral = socketCentral;
         this.socketSurtidor = socketSurtidor;
-        db = SingletonBD.getInstance();
+        db = new BDsucursal();
     }
 
     public Sucursal(Socket socketSurtidor) throws IOException {
         System.out.println("-->iniciando Sucursal en modo autónomo");
         this.socketCentral = null;
         this.socketSurtidor = socketSurtidor;
-        db = SingletonBD.getInstance();
+        db = new BDsucursal();
     }
 
     @Override
@@ -47,17 +47,43 @@ public class Sucursal extends Thread {
                     System.out.println("Recibiendo en sucursal: " + message);
                     String [] splitted = message.split("-");
                     if(splitted[0].equals("vnt")){
-                        guardarVenta(splitted);
+                        //enviar actualización a la central
+                        Boolean enviado = enviarACentral(message);
+                        // guardar en la base de datos
+                        guardarVenta(splitted, enviado);
                     }
                 }
             }
-            this.db.escribirBD();
+//            this.db.escribirBD();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void guardarVenta(String[] splitted) {
+    private Boolean enviarACentral(String message){
+        Boolean response = false;
+        try {
+            DataOutputStream out = new DataOutputStream(this.socketCentral.getOutputStream());
+            out.writeUTF(message);
+            response = true;
+            // enviar aquellos mensajes que no fueron enviados
+            enviarRezagados();
+        } catch (IOException e) {
+            System.out.println("--->Sucursal: error al enviar actualización a entral");
+        }
+        return response;
+    }
+
+    private void enviarRezagados(){
+        Boolean response = false;
+        // ejecutar consulta para rescatar las ventas no enviadas
+         String rezagados[] = this.db.getRezagados(this.db.conexion);
+         if(rezagados.length == 0) return;
+         for(String rezagada : rezagados)
+             enviarACentral(rezagada);
+    }
+
+    private void guardarVenta(String[] splitted, Boolean enviadoACentral) {
         // if el socket de la central es null, guardar solo en la db local pero con un atributo bandera (para más tarde actualizar)
         // else guardar en db local y mandar la venta a central
 
@@ -78,7 +104,8 @@ public class Sucursal extends Thread {
             break;
         }
         int litros = Integer.valueOf(splitted[2]);
+        this.db.instertarVenta(this.db.conexion, litros, 69, 69, splitted[1], enviadoACentral);
         System.out.println("Venta "+tipo+"  "+litros);
-        this.db.añadirDato(id, tipo, litros);
+//        this.db.añadirDato(id, tipo, litros);
     }
 }
