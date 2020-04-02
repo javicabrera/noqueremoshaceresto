@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class PuenteCentralSurtidor extends Thread {
     ArrayList<Socket> surtidores;
     ArrayList<Sucursal> listeners;
-    SingletonBD db;
+    BDsucursal db;
     Socket socketCentral;
 
     final String HOST = "127.0.0.1"; // Ip del equipo que contiene la central
@@ -24,10 +24,8 @@ public class PuenteCentralSurtidor extends Thread {
     public PuenteCentralSurtidor(){
         this.surtidores = new ArrayList<Socket>();
         this.listeners = new ArrayList<Sucursal>();
-        this.db = SingletonBD.getInstance();
+        this.db = new BDsucursal();
         this.socketCentral = null;
-//        socketCentral = new Socket(HOST, CENTRAL_PORT);
-//        System.out.println("Puente iniciado !!");
     }
 
     @Override
@@ -37,6 +35,10 @@ public class PuenteCentralSurtidor extends Thread {
             try {
                 socketCentral = new Socket(HOST, CENTRAL_PORT);
                 System.out.println("--> Puente iniciado: conexión establecida con servidor Central");
+
+                //actualizar el socket central para cada listener
+                for(Sucursal s : listeners)
+                    s.setSocketCentral(socketCentral);
 
                 DataInputStream inCentral = new DataInputStream(socketCentral.getInputStream());
 //                DataOutputStream outCentral = new DataOutputStream(socketCentral.getOutputStream());
@@ -54,7 +56,6 @@ public class PuenteCentralSurtidor extends Thread {
                     //enviar broadcast para actualizar surtidores
                     sendBroadcast(message);
                 }
-                db.escribirBD();
 
             } catch (IllegalMonitorStateException e){
                 System.out.println("ERORR");
@@ -64,8 +65,8 @@ public class PuenteCentralSurtidor extends Thread {
             }catch (IOException e){
                 // entonces, cada vez que el servidor se desconecte, se hará
                 // una pausa de cinco segundos y volverá a intentar la conexión con el servidor
-                System.out.println("-> ERROR: server Central desconectado (PuenteSucursalSurtidor): ");
-                System.out.println("reconectando...");
+//                System.out.println("-> ERROR: server Central desconectado (PuenteSucursalSurtidor): ");
+//                System.out.println("reconectando...");
 //                e.printStackTrace();
                 freeze(3000);
             }
@@ -81,12 +82,18 @@ public class PuenteCentralSurtidor extends Thread {
         }
     }
 
-    private void sendBroadcast(String message) throws IOException {
+    private void sendBroadcast(String message) {
         DataOutputStream out = null;
         for(Socket surtidor : this.surtidores){
-            System.out.println("...actualizando!: " + message);
-            out = new DataOutputStream(surtidor.getOutputStream());
-            out.writeUTF(message);
+            try{
+                System.out.println("...actualizando!: " + message);
+                out = new DataOutputStream(surtidor.getOutputStream());
+                out.writeUTF(message);
+
+            }catch (IOException e){
+                System.out.println("ERROR ACTUALIZANDO!");
+                e.printStackTrace();
+            }
         }
     }
 
@@ -95,7 +102,7 @@ public class PuenteCentralSurtidor extends Thread {
         if(nuevoSurtidor == null)           return false;
 
         if(this.socketCentral == null)      th = new Sucursal(nuevoSurtidor);
-        else                                   th = new Sucursal(this.socketCentral, nuevoSurtidor);
+        else                                th = new Sucursal(this.socketCentral, nuevoSurtidor);
 
         th.start();
         listeners.add(th); // Se crea un hilo por cada surtidor el cual escuchará por mensajes

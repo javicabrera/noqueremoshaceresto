@@ -14,7 +14,7 @@ import java.util.logging.Logger;
  */
 public class BDsurtidor {
     Connection conexion= null;
-    String pass= "199230662";
+    String pass= "password";
     String user= "postgres";
     String baseDatos="jdbc:postgresql://localhost:5432/BDSurtidor";
     /**
@@ -27,65 +27,65 @@ public class BDsurtidor {
     public void conectar(){
         try{
         conexion= DriverManager.getConnection(baseDatos, user, pass);
-        System.out.println("CONECTADO");
+            System.out.println("BASE DE DATOS CONECTADA");
         }catch(SQLException ex){
             ex.printStackTrace();
-            System.out.println("No se conectó");
+            System.out.println("ERROR: no se pudo conectar a la base de datos");
         }
     }
-    public void insertarSurtidor(Connection c, int idSucursal,int p93, int p95, int p97, int pDiesel, int pKer){
+
+//    public void insertarSurtidor(Connection c, int idSucursal,int p93, int p95, int p97, int pDiesel, int pKer){
+//        try {
+//            Statement s= c.createStatement();
+//            s.executeUpdate("INSERT INTO surtidor (precio93 , precio95, precio97, preciok, preciodiesel, id_sucursal) VALUES"
+//                    + "( "+p93+","+p95+","+p97+","+pDiesel+","+pKer+","+idSucursal+");");
+//        } catch (SQLException ex) {
+//            Logger.getLogger(BDsurtidor.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
+
+    public void instertarVenta(int litros, int idSurtidor,  String tipo, Boolean enviado){
+        String env = enviado?"t":"f";
         try {
-            Statement s= c.createStatement();
-            s.executeUpdate("INSERT INTO surtidor (precio93 , precio95, precio97, preciok, preciodiesel, id_sucursal) VALUES"
-                    + "( "+p93+","+p95+","+p97+","+pDiesel+","+pKer+","+idSucursal+");");
-        } catch (SQLException ex) {
-            Logger.getLogger(BDsurtidor.class.getName()).log(Level.SEVERE, null, ex);
-        }        
-    }
-    public void instertarVenta(Connection c, int litros, int id, int idSurtidor,  String tipo, boolean x){
-        
-        try {
-            Statement s= c.createStatement();
-            s.executeUpdate("INSERT INTO Venta (litros,id_surtidor,id,tipo,enviado) VALUES ("+ litros + "," + id + ","
-                    + idSurtidor+","+tipo+","+x+");");
+            Statement s= this.conexion.createStatement();
+            s.executeUpdate("INSERT INTO ventas (litros, idsurtidor, tipo, enviado) VALUES ("+ litros + "," + idSurtidor
+                    + ",'" + tipo + "','" + env + "');");
         } catch (SQLException ex) {
             Logger.getLogger(BDsurtidor.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public void modificarPrecio(Connection c, int id, int idSucursal, String tipo, int precio) throws SQLException{
+
+    public void modificarPrecio(int idSurtidor, String tipo, int precio) throws SQLException{
         try {
-            Statement s= c.createStatement();                
+            Statement s= this.conexion.createStatement();
             if (tipo.equals("93")){
-                s.executeUpdate("UPDATE surtidor SET precio93="+precio+ " WHERE id="+ id+" AND id_sucursal="+idSucursal+");");
+                s.executeUpdate("UPDATE parametros SET precio93=" + precio + " WHERE idsurtidor="+ idSurtidor+";");
             }
             else if (tipo.equals("95")){
-                s.executeUpdate("UPDATE surtidor SET precio95="+precio+ " WHERE id="+ id+" AND id_sucursal="+idSucursal+");");
+                s.executeUpdate("UPDATE parametros SET precio95=" + precio + " WHERE idsurtidor="+ idSurtidor+";");
             }
             else if (tipo.equals("97")){
-                s.executeUpdate("UPDATE surtidor SET precio97="+precio+ " WHERE id="+ id+" AND id_sucursal="+idSucursal+");");
+                s.executeUpdate("UPDATE parametros SET precio97=" + precio + " WHERE idsurtidor="+ idSurtidor+";");
             }
             else if (tipo.equals("diesel")){
-                s.executeUpdate("UPDATE surtidor SET preciodiesel="+precio+ " WHERE id="+ id+" AND id_sucursal="+idSucursal+");");
+                s.executeUpdate("UPDATE parametros SET precioDiesel=" + precio + " WHERE idsurtidor="+ idSurtidor+";");
             }
             else if (tipo.equals("kerosene")){
-                s.executeUpdate("UPDATE surtidor SET preciok="+precio+ " WHERE id="+ id+" AND id_sucursal="+idSucursal+");");
+                s.executeUpdate("UPDATE parametros SET precioKerosene=" + precio + " WHERE idsurtidor=" + idSurtidor+";");
             }
-           
         } catch (SQLException ex) {
             Logger.getLogger(BDsurtidor.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public void getCargas(Connection c){
+    public void getCargas(){
         int cargas=0;
         String consulta= "SELECT count(*) FROM ventas";
         try {
-            Statement s=c.createStatement();
-            PreparedStatement ps=c.prepareStatement(consulta);
+            PreparedStatement ps = this.conexion.prepareStatement(consulta);
             ResultSet rs= ps.executeQuery();
             while(rs.next()){
                 cargas=rs.getInt("count");
             }
-            c.close();
         } catch (SQLException ex) {
             Logger.getLogger(BDsurtidor.class.getName()).log(Level.SEVERE, null, ex);
         }

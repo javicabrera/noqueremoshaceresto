@@ -47,23 +47,23 @@ public class CentralGui extends Thread {
                     break;
                 default: break;
             }
-            if(option == 2) break;
+            if(option == 3) break;
         }
     }
 
     private void solicitarReporte(ArrayList<Socket> sucursales){
         //ahora se tendrán que pedir los reportes a la base de datos !!
-        int cantCargas93 = db.getCantidadDeCargas(this.db.conexion, "93");
-        int cantCargas95 = db.getCantidadDeCargas(this.db.conexion, "95");
-        int cantCargas97 = db.getCantidadDeCargas(this.db.conexion, "97");
-        int cantCargasDiesel = db.getCantidadDeCargas(this.db.conexion, "diesel");
-        int cantCargasKerosene = db.getCantidadDeCargas(this.db.conexion, "kerosene");
+        int cantCargas93 = db.getCantidadDeCargas("93");
+        int cantCargas95 = db.getCantidadDeCargas("95");
+        int cantCargas97 = db.getCantidadDeCargas("97");
+        int cantCargasDiesel = db.getCantidadDeCargas("diesel");
+        int cantCargasKerosene = db.getCantidadDeCargas("kerosene");
 
-        double cantLitros93 = db.getLitrosConsumidos(this.db.conexion, "93");
-        double cantLitros95 = db.getLitrosConsumidos(this.db.conexion, "95");
-        double cantLitros97 = db.getLitrosConsumidos(this.db.conexion, "97");
-        double cantLitrosDiesel = db.getLitrosConsumidos(this.db.conexion, "diesel");
-        double cantLitrosKerosene = db.getLitrosConsumidos(this.db.conexion, "kerosene");
+        double cantLitros93 = db.getLitrosConsumidos("93");
+        double cantLitros95 = db.getLitrosConsumidos("95");
+        double cantLitros97 = db.getLitrosConsumidos("97");
+        double cantLitrosDiesel = db.getLitrosConsumidos("diesel");
+        double cantLitrosKerosene = db.getLitrosConsumidos("kerosene");
 
         System.out.println(":::::REPORTE:::::");
         System.out.println("->BENCINA 93:");
@@ -104,7 +104,7 @@ public class CentralGui extends Thread {
 
     private void actualizarPrecio(ArrayList<Socket> sucursales) {
         String tipoCombustible = "";
-        double nuevoPrecio = 0.0;
+        int nuevoPrecio = 0;
         int option;
 
         System.out.println("1 - bencina 93");
@@ -131,7 +131,7 @@ public class CentralGui extends Thread {
         }
 
         System.out.print("ingrese nuevo precio: ");
-        nuevoPrecio = scanner.nextDouble();
+        nuevoPrecio = scanner.nextInt();
         sendBroadcast("act-" + tipoCombustible + "-" + nuevoPrecio, sucursales);
     }
 
@@ -144,7 +144,7 @@ public class CentralGui extends Thread {
                 out.writeUTF(message);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 

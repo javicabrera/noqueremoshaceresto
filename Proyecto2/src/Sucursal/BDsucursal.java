@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  */
 public class BDsucursal {
     Connection conexion= null;
-    String pass= "199230662";
+    String pass= "password";
     String user= "postgres";
     String baseDatos="jdbc:postgresql://localhost:5432/BDSucursal";
     /**
@@ -25,75 +25,79 @@ public class BDsucursal {
     BDsucursal() {
         conectar();
     }
-    
+
     public void conectar(){
         try{
-        conexion= DriverManager.getConnection(baseDatos, user, pass);
-        System.out.println("CONECTADO");
+            conexion= DriverManager.getConnection(baseDatos, user, pass);
+            System.out.println("BASE DE DATOS CONECTADA");
         }catch(SQLException ex){
             ex.printStackTrace();
-            System.out.println("No se conectó");
+            System.out.println("ERROR: no se pudo conectar a la base de datos");
         }
     }
-    public void instertarVenta(Connection c, int litros, int id, int idSurtidor,  String tipo, Boolean enviado){
+    public void instertarVenta(int litros, int idVenta, int idSucursal, int idSurtidor,  String tipo, Boolean enviado){
         String env = enviado?"t":"f";
         try {
-            Statement s= c.createStatement();
-            s.executeUpdate("INSERT INTO transcaccion VALUES (" + litros + "," + id + ","
-                    + idSurtidor + ",'" + tipo + "','" + enviado + "');");
-            c.close();
+            Statement s= this.conexion.createStatement();
+            s.executeUpdate("INSERT INTO ventas (idventa, idsucursal, litros, tipo, enviado)"
+                    + " VALUES ("+ idVenta + "," + idSucursal + "," + litros + ",'"
+                    + tipo +"','"+ enviado + "');");
         } catch (SQLException ex) {
             Logger.getLogger(BDsucursal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public void modificarPrecio(Connection c, int id, int idSucursal,int p93, int p95, int p97, int pDiesel, int pKer){
+    public void modificarPrecio(int idSucursal,int p93, int p95, int p97, int pDiesel, int pKer){
         try {
-            Statement s= c.createStatement();
-            s.executeUpdate("UPDATE surtidor SET precio93="+p93+ ","
+            Statement s= this.conexion.createStatement();
+            s.executeUpdate("UPDATE parametros SET precio93="+p93+ ","
                     + "preci95="+ p95 + ", precio97="+ p97+","
                     + "precioKerosene="+ pKer+", precioDiesel="+pDiesel+""
-                    + " WHERE id="+ id+" AND id_sucursal="+idSucursal);
-            c.close();
+                    + " WHERE id_sucursal=" + idSucursal);
         } catch (SQLException ex) {
             Logger.getLogger(BDsucursal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public void getCargas(Connection c){
+    public void getCargas(){
         int cargas=0;
         String consulta= "SELECT count(*) FROM ventas";
         try {
-            Statement s=c.createStatement();
-            PreparedStatement ps=c.prepareStatement(consulta);
+            PreparedStatement ps=this.conexion.prepareStatement(consulta);
             ResultSet rs= ps.executeQuery();
             while(rs.next()){
                 cargas=rs.getInt("count");
             }
-            c.close();
         } catch (SQLException ex) {
             Logger.getLogger(BDsucursal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public String[] getRezagados(Connection c){
+    public String[] getRezagados(){
         ArrayList<String> rezagados = new ArrayList<String>();
 
         int cargas=0;
-        String consulta= "SELECT * FROM transaccion WHERE enviado='f';";
+        String consulta= "SELECT * FROM ventas WHERE enviado='f';";
         try {
-            PreparedStatement ps = c.prepareStatement(consulta);
+            PreparedStatement ps = this.conexion.prepareStatement(consulta);
             ResultSet rs= ps.executeQuery();
 
             while(rs.next()){
                 String litros = rs.getString("litros");
                 String tipo = rs.getString("tipo");
-                String mensaje = "vnt" + tipo + litros;
+                String mensaje = "vnt-" + tipo+ "-" + litros;
+                System.out.println("-->obteniendo el siguiente rezagado: " + mensaje);
                 rezagados.add(mensaje);
             }
-            c.close();
         } catch (SQLException ex) {
             Logger.getLogger(BDsucursal.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return (String[])rezagados.toArray();
+
+        String arr[] = new String[rezagados.size()];
+
+        for (int i=0; i<rezagados.size(); ++i) {
+            arr[i] = rezagados.get(i);
+        }
+
+        return arr;
     }
 }

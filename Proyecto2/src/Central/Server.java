@@ -53,7 +53,8 @@ public class Server {
             sc.close();
             System.out.println("Cerrando servidor central...saliendo !");
         }catch (IOException e){
-            e.printStackTrace();
+            System.out.println("Sucursal decanectada !");
+//            e.printStackTrace();
         }
     }
     

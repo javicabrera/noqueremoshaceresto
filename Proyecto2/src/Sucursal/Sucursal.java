@@ -47,16 +47,16 @@ public class Sucursal extends Thread {
                     System.out.println("Recibiendo en sucursal: " + message);
                     String [] splitted = message.split("-");
                     if(splitted[0].equals("vnt")){
-                        //enviar actualización a la central
+                        // enviar actualización a la central
                         Boolean enviado = enviarACentral(message);
+                        if(enviado) enviarRezagados();
                         // guardar en la base de datos
                         guardarVenta(splitted, enviado);
                     }
                 }
             }
-//            this.db.escribirBD();
         } catch (IOException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 
@@ -67,8 +67,9 @@ public class Sucursal extends Thread {
             out.writeUTF(message);
             response = true;
             // enviar aquellos mensajes que no fueron enviados
-            enviarRezagados();
         } catch (IOException e) {
+            System.out.println("--->Sucursal: error al enviar actualización a entral");
+        }catch (NullPointerException e){
             System.out.println("--->Sucursal: error al enviar actualización a entral");
         }
         return response;
@@ -77,10 +78,10 @@ public class Sucursal extends Thread {
     private void enviarRezagados(){
         Boolean response = false;
         // ejecutar consulta para rescatar las ventas no enviadas
-         String rezagados[] = this.db.getRezagados(this.db.conexion);
-         if(rezagados.length == 0) return;
-         for(String rezagada : rezagados)
-             enviarACentral(rezagada);
+        String rezagados[] = this.db.getRezagados();
+        if(rezagados.length == 0) return;
+        for(String rezagada : rezagados)
+            enviarACentral(rezagada);
     }
 
     private void guardarVenta(String[] splitted, Boolean enviadoACentral) {
@@ -91,21 +92,26 @@ public class Sucursal extends Thread {
         int tipo;
         switch (splitted[1]){
             case "93": tipo = 1;
-            break;
+                break;
             case "95": tipo = 2;
-            break;
+                break;
             case "97": tipo = 3;
-            break;
+                break;
             case "diesel": tipo = 4;
-            break;
+                break;
             case "kerosene": tipo = 5;
-            break;
+                break;
             default: tipo = 5;
-            break;
+                break;
         }
         int litros = Integer.valueOf(splitted[2]);
-        this.db.instertarVenta(this.db.conexion, litros, 69, 69, splitted[1], enviadoACentral);
+
+        this.db.instertarVenta(litros, 69, 69, 69, splitted[1], enviadoACentral);
         System.out.println("Venta " + tipo + "  " + litros);
 //        this.db.añadirDato(id, tipo, litros);
+    }
+
+    public void setSocketCentral(Socket socketCentral){
+        this.socketCentral = socketCentral;
     }
 }

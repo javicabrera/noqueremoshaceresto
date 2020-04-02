@@ -117,7 +117,7 @@ public class Surtidor {
                         String [] splitted  = message.split("-");
                         String tipoCompbustible = splitted[1];
                         int nuevoPrecio = Integer.valueOf(splitted[2]);
-                        actualizarCombustible(bd,tipoCompbustible, nuevoPrecio, surtidor1);
+                        actualizarCombustible(bd, tipoCompbustible, nuevoPrecio, surtidor1);
                         System.out.println("nuevos precios: " + surtidor1);
                     }
                     if(message.equals("end")) break;
@@ -154,7 +154,7 @@ public class Surtidor {
      * @param surtidor
      */
     private static void actualizarCombustible(BDsurtidor bd,String tipoCompbustible, int nuevoPrecio,Surtidor surtidor) throws SQLException {
-        bd.modificarPrecio(bd.conexion, surtidor.id, 1, tipoCompbustible, nuevoPrecio);
+            bd.modificarPrecio(1, tipoCompbustible, nuevoPrecio);
         switch (tipoCompbustible){
             case "93":  
                 surtidor.setGasolina93(nuevoPrecio);                 

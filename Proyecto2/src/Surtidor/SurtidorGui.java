@@ -119,7 +119,6 @@ public class SurtidorGui extends Thread {
             this.sucursalSocket = null;
             this.out = null;
         }
-
     }
 
     private Boolean nuevaVenta(String message, String tipo, int cantidad) throws IOException {
@@ -128,10 +127,10 @@ public class SurtidorGui extends Thread {
         }
         if(this.out != null) {
             System.out.println("--> SurtidorGui: venta exitosa, enviando venta a Sucursal..");
-            basedatos.instertarVenta(basedatos.conexion, cantidad, 1, 1, tipo,true);
+                basedatos.instertarVenta(cantidad, 1, tipo,true);
             out.writeUTF(message);
         }else{
-            basedatos.instertarVenta(basedatos.conexion, cantidad, 1, 1, tipo,false);
+            basedatos.instertarVenta(cantidad, 1, tipo, false);
             //solo guardar en base de datos local
             System.out.println("--> SurtidorGui: venta guardada solo en base de datos local.");
         }

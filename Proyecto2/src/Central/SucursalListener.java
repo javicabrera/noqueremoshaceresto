@@ -44,7 +44,7 @@ public class SucursalListener extends Thread {
         if(!splitted[0].equals("vnt")) return;
         int litros = Integer.parseInt(splitted[2]);
         String tipo = splitted[1];
-        this.db.instertarVenta(this.db.conexion, litros, 69, 69, 69, tipo, true);
+        this.db.instertarVenta(litros, 69, 69, 69, tipo, true);
 
         System.out.println("CENTRAL: venta " + message + " guardada.");
         }
